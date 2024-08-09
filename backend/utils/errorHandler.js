@@ -13,6 +13,7 @@ function errorHandler(err, req, res, next) {
     if (err.name === 'ValidationError') {
         errorResponse.message = 'Validation failed';
         errorResponse.errors = err.errors; // Add validation errors if any
+        errorResponse.errors = Object.values(err.errors).map(err => err.message);
         res.status(400).json(errorResponse);
     } else if (err.name === 'UnauthorizedError') {
         res.status(401).json(errorResponse);
