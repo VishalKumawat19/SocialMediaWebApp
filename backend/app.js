@@ -2,6 +2,7 @@ const express = require('express')
 const app = express()
 const cookieParser = require('cookie-parser')
 const cors = require('cors')
+const errorHandler = require('./utils/errorHandler')
 
 
 // app.use((req, res, next) => {
@@ -24,7 +25,7 @@ app.use(express.urlencoded({extended:true}))
 
 
 
-
+app.use(errorHandler)
 module.exports = app
 
 
