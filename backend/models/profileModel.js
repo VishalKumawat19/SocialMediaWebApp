@@ -6,8 +6,7 @@ const profileSchema = mongoose.Schema({
         ref:"User"
     },
     profileImage:{
-        type:String,
-        required:[true,"Profile image is required"]
+        type:String
     },
     fullname:{
         type:String,
