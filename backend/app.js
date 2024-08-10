@@ -26,6 +26,12 @@ app.use(express.urlencoded({extended:true}))
 const authRouter = require('./routes/authRoutes')
 app.use('/api/v1/auth',authRouter)
 
+const postRouter = require('./routes/postRoutes')
+app.use('/api/v1/posts',postRouter)
+
+const profileRouter = require('./routes/profileRoutes')
+app.use('/api/v1/profile',profileRouter)
+
 app.use(errorHandler)
 module.exports = app
 

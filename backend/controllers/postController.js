@@ -1,12 +1,16 @@
 const Post = require('../models/postModel')
 const Profile = require('../models/profileModel')
+const cloudinary = require('../config/cloudinary')
 
 
 const createPost = async(req,res,next) =>{
     try {
         const userId = req.user
         const caption = req.body
-        const imageUrl = req.file.path
+        const result = await cloudinary.uploader.upload(req.file.path, {
+            folder: "postImages",
+          });
+        const imageUrl = result.secure_url
         const profileImage = await Profile.findOne({userId}).profileImage
         const newPost = new Post({imageUrl,userId,caption,profileImage})
         await newPost.save()
