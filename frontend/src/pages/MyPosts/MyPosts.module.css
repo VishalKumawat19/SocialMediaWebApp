@@ -1,0 +1,69 @@
+/* MyPosts.module.css */
+.myPostsPage {
+  padding: 20px;
+  background-color: #f9f9f9;
+}
+
+.postsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.post {
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  width: calc(50% - 10px); /* Two posts per row with some gap */
+  box-sizing: border-box;
+  padding: 10px;
+  position: relative;
+}
+
+.postImage {
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+
+.caption {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+.deleteBtn {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  padding: 8px 16px;
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.deleteBtn:hover {
+  background-color: #c82333;
+}
+
+@media (max-width: 768px) {
+  .post {
+    width: calc(100% - 20px); /* Single post per row on smaller screens */
+  }
+
+  .deleteBtn {
+    bottom: 5px;
+    right: 5px;
+    font-size: 12px;
+  }
+
+  .caption {
+    font-size: 12px;
+  }
+}

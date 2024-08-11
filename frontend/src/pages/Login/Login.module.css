@@ -1,0 +1,49 @@
+/* Login.module.css */
+.loginPage {
+  max-width: 400px;
+  margin: 6rem auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+.heading {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: #333;
+}
+
+.submitBtn {
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.submitBtn:hover {
+  background-color: #0056b3;
+}
+
+.registerLink {
+  text-align: center;
+  margin-top: 15px;
+  font-size: 14px;
+}
+
+.registerLink a {
+  color: #28a745;
+  text-decoration: none;
+}
+
+.registerLink a:hover {
+  text-decoration: underline;
+}
+
+
+  

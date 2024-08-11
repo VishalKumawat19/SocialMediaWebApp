@@ -45,11 +45,4 @@ body {
     margin: 0 0 1rem 0;
   }
   
-  a {
-    color: #007bff; /* Link color */
-    text-decoration: none;
-  }
-  
-  a:hover {
-    text-decoration: underline;
-  }
+ 

@@ -1,0 +1,54 @@
+/* Navbar.module.css */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+}
+
+.leftLinks {
+  display: flex;
+  gap: 20px;
+}
+
+.leftLinks a {
+  color: white;
+  text-decoration: none;
+}
+
+.leftLinks a:hover {
+  text-decoration: underline;
+}
+
+.rightLinks {
+  display: flex;
+  align-items: center;
+}
+
+.logoutBtn {
+  padding: 8px 16px;
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.logoutBtn:hover {
+  background-color: #c82333;
+}
+
+@media (max-width: 768px) {
+  .leftLinks {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .rightLinks {
+    margin-top: 10px;
+  }
+}
+
