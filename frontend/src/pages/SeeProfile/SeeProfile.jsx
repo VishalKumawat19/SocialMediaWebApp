@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styles from './SeeProfile.module.css';
+import { getProfile } from '../../services/profileService';
 
 function SeeProfile() {
+  const navigateTo = useNavigate()
   const [profile, setProfile] = useState({
     fullname: '',
     profileImage: '',
@@ -13,9 +15,16 @@ function SeeProfile() {
   useEffect(() => {
     // Fetch profile data from the server (mock data for now)
     const fetchProfile = async () => {
-      const response = await fetch('http://localhost:3000/api/v1/profile');
-      const data = await response.json();
-      setProfile(data);
+      const response = await getProfile();
+      console.log(response)
+      if(response.status==200 && !response.data.profile){
+        navigateTo('/create-profile')
+      }
+      else if(response.status==200){
+      const profile = response.data.profile
+      setProfile(profile);
+      }
+      
     };
     fetchProfile();
   }, []);

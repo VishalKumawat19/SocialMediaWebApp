@@ -1,14 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState} from 'react';
+import {useNavigate } from 'react-router-dom';
 import styles from './CreateProfile.module.css';
 import TextInput from '../../components/TextInput/TextInput';
 import FileUpload from '../../components/FileUpload/FileUpload';
 import TextArea from '../../components/TextArea/TextArea';
+import { createProfile } from '../../services/profileService';
+import Alert from '../../components/Alert/Alert';
 
 function CreateProfile() {
+  const navigateTo = useNavigate()
   const [fullname, setFullname] = useState('');
   const [profileImage, setProfileImage] = useState(null);
   const [gender, setGender] = useState('');
   const [bio, setBio] = useState('');
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertType, setAlertType] = useState('success'); // Can be 'success', 'error', or 'info'
+  const [alertMessage, setAlertMessage] = useState('');
+
+  const handleShowAlert = (type, message) => {
+    setAlertType(type);
+    setAlertMessage(message);
+    setShowAlert(true);
+  };
+
+  const handleCloseAlert = () => {
+    setShowAlert(false);
+  };
 
   const handleProfileImageChange = (e) => {
     setProfileImage(e.target.files[0]);
@@ -23,13 +40,18 @@ function CreateProfile() {
     formData.append('gender', gender);
     formData.append('bio', bio);
 
-    await fetch('http://localhost:3000/api/v1/profile', {
-      method: 'POST',
-      body: formData,
-    });
+    const res = await createProfile(formData)
+    console.log(res)
+    if(res.status==201){
+      navigateTo('/profile')
+    }
+    else{
+      handleShowAlert("error",res.data.message)
+    }
   };
 
   return (
+    <div>
     <div className={styles.createProfilePage}>
       <h2 className={styles.heading}>Create Profile</h2>
       <form onSubmit={handleSubmit} className={styles.form}>
@@ -62,6 +84,10 @@ function CreateProfile() {
         />
         <button type="submit" className={styles.submitBtn}>Create Profile</button>
       </form>
+    </div>
+    {showAlert && (
+      <Alert type={alertType} message={alertMessage} onClose={handleCloseAlert} />
+    )}
     </div>
   );
 }

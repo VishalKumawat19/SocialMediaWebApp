@@ -1,38 +1,56 @@
 const Profile = require("../models/profileModel");
+const Post = require('../models/postModel')
 const cloudinary = require("../config/cloudinary");
+const fs = require("fs");
+const path = require("path");
 
 const createProfile = async (req, res, next) => {
   try {
     const userId = req.user;
     const { fullname, gender, bio } = req.body;
     const profileExists = await Profile.findOne({ userId });
-
+    console.log(profileExists);
     if (profileExists) {
       return res
         .status(409)
         .json({ message: "Profile already created for this user" });
     }
 
-    
+    if (!req.file) {
+      const profileImage =
+        "https://res.cloudinary.com/df5qnxlqb/image/upload/v1723465359/vwwwsyridynhwf54anco.png";
+      const newProfile = new Profile({
+        userId,
+        fullname,
+        gender,
+        bio,
+        profileImage,
+      });
 
-    const result = await cloudinary.uploader.upload(req.file.path, {
-      folder: "profileImages",
-    });
+      await newProfile.save();
+      res.status(201).json({
+        message: "Profile created successfully",
+      });
+    } else {
+      const result = await cloudinary.uploader.upload(req.file.path);
+      fs.unlinkSync(req.file.path);
 
-    const profileImage = result.secure_url;
+      const profileImage = result.secure_url;
+      console.log(profileImage);
 
-    const newProfile = new Profile({
-      userId,
-      fullname,
-      gender,
-      bio,
-      profileImage,
-    });
+      const newProfile = new Profile({
+        userId,
+        fullname,
+        gender,
+        bio,
+        profileImage,
+      });
 
-    await profileImage.save();
-    res.status(201).json({
-      message: "Profile created successfully",
-    });
+      await newProfile.save();
+      res.status(201).json({
+        message: "Profile created successfully",
+      });
+    }
   } catch (error) {
     next(error);
   }
@@ -49,11 +67,12 @@ const editProfile = async (req, res, next) => {
       });
     }
     const profileId = profileExists._id;
-    if (req.file.path) {
-        const result = await cloudinary.uploader.upload(req.file.path, {
-            folder: "profileImages",
-          });
+
+    if (req.file) {
+      const result = await cloudinary.uploader.upload(req.file.path);
+      fs.unlinkSync(req.file.path);
       const profileImage = result.secure_url;
+      await Post.findOneAndUpdate({userId},{profileImage})
       await Profile.findByIdAndUpdate(
         profileId,
         { fullname, bio, gender, profileImage },

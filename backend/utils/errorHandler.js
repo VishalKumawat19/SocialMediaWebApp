@@ -11,10 +11,10 @@ function errorHandler(err, req, res, next) {
 
     // Handle specific error types
     if (err.name === 'ValidationError') {
-        errorResponse.message = 'Validation failed';
+        // errorResponse.message = 'Validation failed';
         errorResponse.errors = err.errors; // Add validation errors if any
-        errorResponse.errors = Object.values(err.errors).map(err => err.message);
-        res.status(400).json(errorResponse);
+        errorResponse.errors = (Object.values(err.errors).map(err => err.message))[0];
+        res.status(400).json({message:errorResponse.errors});
     } else if (err.name === 'UnauthorizedError') {
         res.status(401).json(errorResponse);
     } else {

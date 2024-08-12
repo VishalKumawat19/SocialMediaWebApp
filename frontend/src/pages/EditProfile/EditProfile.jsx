@@ -1,24 +1,42 @@
 import React, { useState, useEffect } from 'react';
+import {useNavigate } from 'react-router-dom';
 import styles from './EditProfile.module.css';
 import TextInput from '../../components/TextInput/TextInput';
 import FileUpload from '../../components/FileUpload/FileUpload';
 import TextArea from '../../components/TextArea/TextArea';
+import { getProfile, updateProfile } from '../../services/profileService';
+import Alert from '../../components/Alert/Alert';
 
 function EditProfile() {
+  const navigateTo = useNavigate()
   const [fullname, setFullname] = useState('');
   const [profileImage, setProfileImage] = useState(null);
   const [gender, setGender] = useState('');
   const [bio, setBio] = useState('');
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertType, setAlertType] = useState('success'); // Can be 'success', 'error', or 'info'
+  const [alertMessage, setAlertMessage] = useState('');
+
+  const handleShowAlert = (type, message) => {
+    setAlertType(type);
+    setAlertMessage(message);
+    setShowAlert(true);
+  };
+
+  const handleCloseAlert = () => {
+    setShowAlert(false);
+  };
+
 
   useEffect(() => {
     // Fetch profile data from the server
     const fetchProfile = async () => {
-      const response = await fetch('http://localhost:3000/api/v1/profile');
-      const data = await response.json();
-      setFullname(data.fullname);
-      setProfileImage(data.profileImage);
-      setGender(data.gender);
-      setBio(data.bio);
+      const response = await getProfile()
+      const profile = response.data.profile
+      setFullname(profile.fullname);
+      setProfileImage(profile.profileImage);
+      setGender(profile.gender);
+      setBio(profile.bio);
     };
     fetchProfile();
   }, []);
@@ -35,13 +53,18 @@ function EditProfile() {
     formData.append('gender', gender);
     formData.append('bio', bio);
 
-    await fetch('http://localhost:3000/api/v1/profile', {
-      method: 'PUT',
-      body: formData,
-    });
+    const response = await updateProfile(formData)
+    console.log(response)
+    if(response.status==200){
+      navigateTo('/profile')
+    }
+    else{
+      handleShowAlert('error',response.data.message)
+    }
   };
 
   return (
+    <div>
     <div className={styles.editProfilePage}>
       <h2 className={styles.heading}>Edit Profile</h2>
       <form onSubmit={handleSubmit} className={styles.form}>
@@ -76,6 +99,12 @@ function EditProfile() {
         <button type="submit" className={styles.submitBtn}>Save Changes</button>
       </form>
     </div>
+    {showAlert && (
+      <Alert type={alertType} message={alertMessage} onClose={handleCloseAlert} />
+    )}
+    </div>
+    
+  
   );
 }
 

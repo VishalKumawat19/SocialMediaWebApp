@@ -1,0 +1,37 @@
+/* Alert.module.css */
+.alert {
+    position: relative;
+    padding: 15px;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 14px;
+    margin: 15px 0;
+    display: flex;
+    align-items: center;
+  }
+  
+  .success {
+    background-color: #28a745;
+  }
+  
+  .error {
+    background-color: #dc3545;
+  }
+  
+  .info {
+    background-color: #17a2b8;
+  }
+  
+  .closeBtn {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 20px;
+    cursor: pointer;
+    margin-left: auto;
+  }
+  
+  .closeBtn:hover {
+    opacity: 0.8;
+  }
+  

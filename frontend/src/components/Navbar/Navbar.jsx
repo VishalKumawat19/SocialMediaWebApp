@@ -1,8 +1,14 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styles from './Navbar.module.css';
+import { logout } from '../../services/authService';
 
 function Navbar() {
+  const navigateTo = useNavigate()
+  const logoutHandler = async() =>{
+    await logout()
+    navigateTo('/login')
+  }
   return (
     <nav className={styles.navbar}>
       <div className={styles.leftLinks}>
@@ -12,7 +18,7 @@ function Navbar() {
         <Link to="/my-posts">My Posts</Link>
       </div>
       <div className={styles.rightLinks}>
-        <button className={styles.logoutBtn}>Logout</button>
+        <button className={styles.logoutBtn} onClick={logoutHandler}>Logout</button>
       </div>
     </nav>
   );

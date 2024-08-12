@@ -1,24 +1,50 @@
 import React, { useState } from 'react';
+import {useNavigate } from 'react-router-dom';
 import FileUpload from '../../components/FileUpload/FileUpload';
 import TextArea from '../../components/TextArea/TextArea';
 import styles from './CreatePost.module.css';
+import { createPost } from '../../services/postService';
+import Alert from '../../components/Alert/Alert';
 
 function CreatePost() {
+  const navigateTo = useNavigate()
   const [caption, setCaption] = useState('');
-  const [image, setImage] = useState(null);
+  const [postImage, setPostImage] = useState(null);
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertType, setAlertType] = useState('success'); // Can be 'success', 'error', or 'info'
+  const [alertMessage, setAlertMessage] = useState('');
 
-  const handleImageChange = (e) => {
-    setImage(e.target.files[0]);
+  const handleShowAlert = (type, message) => {
+    setAlertType(type);
+    setAlertMessage(message);
+    setShowAlert(true);
   };
 
-  const handleSubmit = (e) => {
+  const handleCloseAlert = () => {
+    setShowAlert(false);
+  };
+  
+  const handleImageChange = (e) => {
+    setPostImage(e.target.files[0]);
+  };
+
+  const handleSubmit =async (e) => {
     e.preventDefault();
-    // Handle the form submission logic here
+    const response = await createPost({postImage,caption})
+    
+    if(response.status==201){
+      navigateTo('/my-posts')
+    }
+    else{
+      console.log(response)
+      handleShowAlert('error',response.data.message)
+    }
+    
   };
 
   return (
     <>
-
+ <div>
       <div className={styles.createPostPage}>
         <h2 className={styles.heading}>Create Post</h2>
         <form onSubmit={handleSubmit}>
@@ -27,10 +53,15 @@ function CreatePost() {
             label="Caption"
             value={caption}
             onChange={(e) => setCaption(e.target.value)}
+           
           />
           <button type="submit" className={styles.submitBtn}>Post</button>
         </form>
       </div>
+      {showAlert && (
+      <Alert type={alertType} message={alertMessage} onClose={handleCloseAlert} />
+    )}
+    </div>
     </>
   );
 }

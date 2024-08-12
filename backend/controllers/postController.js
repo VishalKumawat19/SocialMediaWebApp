@@ -1,18 +1,26 @@
 const Post = require('../models/postModel')
 const Profile = require('../models/profileModel')
-const cloudinary = require('../config/cloudinary')
+const User = require('../models/authModel')
+const cloudinary = require("../config/cloudinary");
+const fs = require('fs');
+const path = require('path');
 
 
 const createPost = async(req,res,next) =>{
     try {
         const userId = req.user
-        const caption = req.body
-        const result = await cloudinary.uploader.upload(req.file.path, {
-            folder: "postImages",
-          });
+        const {caption} = req.body
+        const result = await cloudinary.uploader.upload(req.file.path);
+        fs.unlinkSync(req.file.path);
         const imageUrl = result.secure_url
-        const profileImage = await Profile.findOne({userId}).profileImage
-        const newPost = new Post({imageUrl,userId,caption,profileImage})
+        console.log(userId)
+        const profile = await Profile.findOne({userId})
+        const user = await User.findById(userId)
+        const username = user.username
+        console.log(profile)
+        const profileImage = profile.profileImage
+        const newPost = new Post({profileImage,imageUrl,caption,userId,username})
+        console.log(newPost)
         await newPost.save()
         res.status(201).json({message:"Post created successfully"})
     } catch (error) {
@@ -24,7 +32,7 @@ const createPost = async(req,res,next) =>{
 const getUserPosts = async(req,res,next)=>{
     try {
         const userId = req.user
-        const posts = await Profile.findOne({userId})
+        const posts = await Post.find({userId})
         res.status(200).json({posts:posts})
     } catch (error) {
         next(error)
@@ -48,7 +56,7 @@ const deletePost = async(req,res,next)=>{
 const getAllPost = async(req,res,next)=>{
     try {
         const userId = req.user
-        const posts = await Profile.find({})
+        const posts = await Post.find({})
         const allPosts = posts.filter(post=>post.userId!=userId)
         res.status(200).json({posts:allPosts})
     } catch (error) {

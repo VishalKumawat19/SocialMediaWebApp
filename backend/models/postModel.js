@@ -4,6 +4,9 @@ const postSchema = mongoose.Schema({
     profileImage:{
         type:String
     },
+    username:{
+        type:String
+    },
     imageUrl:{
         type:String,
         required:[true,"image is required"]
@@ -20,3 +23,5 @@ const postSchema = mongoose.Schema({
 })
 
 const Post = mongoose.model("Post",postSchema)
+
+module.exports = Post

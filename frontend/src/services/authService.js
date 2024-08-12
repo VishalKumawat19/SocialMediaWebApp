@@ -1,15 +1,29 @@
-import axios from 'axios';
+import axiosInstance from '../utils/axiosConfig';
+import { AUTH_ROUTES } from '../utils/constants';
 
-const API_URL = '/api/auth';
-
-export const login = async (username, password) => {
-  return axios.post(`${API_URL}/login`, { username, password });
+export const register = async (userData) => {
+  try {
+    const response = await axiosInstance.post(AUTH_ROUTES.REGISTER, userData);
+    return response;
+  } catch (error) {
+    return error.response;
+  }
 };
 
-export const register = async (username, email, password) => {
-  return axios.post(`${API_URL}/register`, { username, email, password });
+export const login = async (credentials) => {
+  try {
+    const response = await axiosInstance.post(AUTH_ROUTES.LOGIN, credentials);
+    return response;
+  } catch (error) {
+    return error.response;
+  }
 };
 
 export const logout = async () => {
-  return axios.post(`${API_URL}/logout`);
+  try {
+    const response = await axiosInstance.get(AUTH_ROUTES.LOGOUT);
+    return response;
+  } catch (error) {
+    return error.response;
+  }
 };

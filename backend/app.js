@@ -12,10 +12,8 @@ const errorHandler = require('./utils/errorHandler')
 // });
 const corsOptions = {
     origin: "http://localhost:5173",
-    optionsSuccessStatus: 200,
-    credentials: true,
-    allowedHeaders: ['Authorization', 'Content-Type'],
-}
+    // optionsSuccessStatus: 200,
+    credentials: true}
 
 app.use(cors(corsOptions))
 
