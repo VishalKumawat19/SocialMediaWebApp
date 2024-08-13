@@ -11,7 +11,7 @@ const errorHandler = require('./utils/errorHandler')
 //     next();
 // });
 const corsOptions = {
-    origin: "http://localhost:5173",
+    origin: "https://verqen-seven.vercel.app/",
     // optionsSuccessStatus: 200,
     credentials: true}
 
