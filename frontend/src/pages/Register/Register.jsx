@@ -81,7 +81,7 @@ function Register() {
         <button type="submit" className={styles.submitBtn}>Register</button>
       </form>
       <p className={styles.loginLink}>
-        Already have an account? <Link to="/login">Login</Link>
+        Already have an account? <Link to="/">Login</Link>
       </p>
       
     </div>

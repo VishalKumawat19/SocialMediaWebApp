@@ -1,4 +1,4 @@
-import React, { useState} from 'react';
+import React, { useEffect, useState} from 'react';
 import {useNavigate } from 'react-router-dom';
 import styles from './CreateProfile.module.css';
 import TextInput from '../../components/TextInput/TextInput';
@@ -6,6 +6,7 @@ import FileUpload from '../../components/FileUpload/FileUpload';
 import TextArea from '../../components/TextArea/TextArea';
 import { createProfile } from '../../services/profileService';
 import Alert from '../../components/Alert/Alert';
+import { getAllPosts } from '../../services/postService';
 
 function CreateProfile() {
   const navigateTo = useNavigate()
@@ -16,6 +17,16 @@ function CreateProfile() {
   const [showAlert, setShowAlert] = useState(false);
   const [alertType, setAlertType] = useState('success'); // Can be 'success', 'error', or 'info'
   const [alertMessage, setAlertMessage] = useState('');
+  
+  useEffect(()=>{
+    const verifyUser = async() =>{
+     const response = await getAllPosts()
+     if(response.status==403){
+       return navigateTo('/')
+     }
+    }
+    verifyUser()
+   },[])
 
   const handleShowAlert = (type, message) => {
     setAlertType(type);
@@ -43,7 +54,12 @@ function CreateProfile() {
     const res = await createProfile(formData)
     console.log(res)
     if(res.status==201){
-      navigateTo('/profile')
+      handleShowAlert('success',res.data.message)
+      setTimeout(() => {
+        navigateTo('/profile')
+        setShowAlert(false)
+      }, 4000);
+      
     }
     else{
       handleShowAlert("error",res.data.message)

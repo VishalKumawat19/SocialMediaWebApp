@@ -7,14 +7,14 @@ function Navbar() {
   const navigateTo = useNavigate()
   const logoutHandler = async() =>{
     await logout()
-    navigateTo('/login')
+    navigateTo('/')
   }
   return (
     <nav className={styles.navbar}>
       <div className={styles.leftLinks}>
         <Link to="/home">Home</Link>
         <Link to="/profile">Profile</Link>
-        <Link to="/create-post">Create Post</Link>
+        <Link to="/post/new">Create Post</Link>
         <Link to="/my-posts">My Posts</Link>
       </div>
       <div className={styles.rightLinks}>

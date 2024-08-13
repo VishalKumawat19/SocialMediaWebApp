@@ -16,9 +16,12 @@ function SeeProfile() {
     // Fetch profile data from the server (mock data for now)
     const fetchProfile = async () => {
       const response = await getProfile();
+      if(response.status==403){
+        return navigateTo('/')
+      }
       console.log(response)
       if(response.status==200 && !response.data.profile){
-        navigateTo('/create-profile')
+        navigateTo('/profile/new')
       }
       else if(response.status==200){
       const profile = response.data.profile
@@ -36,7 +39,7 @@ function SeeProfile() {
         <h2 className={styles.fullname}>{profile.fullname}</h2>
         <p className={styles.gender}>Gender: {profile.gender}</p>
         <p className={styles.bio}>{profile.bio}</p>
-        <Link to="/edit-profile" className={styles.editBtn}>Edit Profile</Link>
+        <Link to="/profile/modify" className={styles.editBtn}>Edit Profile</Link>
       </div>
     </div>
   );

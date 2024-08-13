@@ -1,15 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import styles from './MyPosts.module.css';
 import { deletePost, getUserPosts } from '../../services/postService';
+import { useNavigate } from 'react-router-dom';
+import NoDataAvailable from '../../components/NoDataAvailable/NoDataAvailable';
 
 
 function MyPosts() {
+  const navigateTo = useNavigate()
   const [posts, setPosts] = useState([]);
+  const [noData, setNoData] = useState(false);
 
   useEffect(() => {
     // Fetch user's posts from the server (mock data for now)
     const fetchPosts = async () => {
       const response = await getUserPosts();
+      if(response.status==403){
+        return navigateTo('/')
+      }
+      const data = response.data.posts
+      if (data.length == 0) {
+        setNoData(true);
+      }
       console.log(response.data.posts)
       if(response.data.posts){
         const userPosts = response.data.posts
@@ -26,7 +37,7 @@ function MyPosts() {
     setPosts(posts.filter(post => post._id !== postId));
   };
 
-  return (
+  return noData?(<NoDataAvailable />):(
     <div className={styles.myPostsPage}>
       <div className={styles.postsContainer}>
         {posts.map((post) => (

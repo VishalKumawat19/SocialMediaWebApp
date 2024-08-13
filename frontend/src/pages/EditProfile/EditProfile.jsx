@@ -31,15 +31,20 @@ function EditProfile() {
   useEffect(() => {
     // Fetch profile data from the server
     const fetchProfile = async () => {
+     
       const response = await getProfile()
+      if(response.status==403){
+       return navigateTo('/')
+      }
       const profile = response.data.profile
       setFullname(profile.fullname);
       setProfileImage(profile.profileImage);
       setGender(profile.gender);
       setBio(profile.bio);
+    
     };
     fetchProfile();
-  }, []);
+  },[]);
 
   const handleProfileImageChange = (e) => {
     setProfileImage(e.target.files[0]);
@@ -56,7 +61,12 @@ function EditProfile() {
     const response = await updateProfile(formData)
     console.log(response)
     if(response.status==200){
-      navigateTo('/profile')
+      handleShowAlert('success',response.data.message)
+      setTimeout(() => {
+        navigateTo('/profile')
+        setShowAlert(false)
+      }, 4000);
+     
     }
     else{
       handleShowAlert('error',response.data.message)
