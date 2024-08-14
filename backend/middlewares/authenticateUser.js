@@ -27,7 +27,9 @@ const authenticateUser = (req, res, next) => {
           req.user = decodedRefresh.id;
           console.log(decodedRefresh.id)
           res.cookie("accessToken", newAccessToken, {
-            httpOnly: true,  
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production', // Ensure this is true if using HTTPS
+            sameSite: 'lax',  
             maxAge: TOKEN_EXPIRY_TIME,
           });
           
