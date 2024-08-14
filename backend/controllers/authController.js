@@ -7,7 +7,6 @@ const TOKEN_EXPIRY_TIME = 7 * 24 * 60 * 60 * 1000;
 
 const cookieOptions = {
   httpOnly: true,
-  sameSite: "Strict",
   maxAge: TOKEN_EXPIRY_TIME,
 };
 

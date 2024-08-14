@@ -27,8 +27,7 @@ const authenticateUser = (req, res, next) => {
           req.user = decodedRefresh.id;
           console.log(decodedRefresh.id)
           res.cookie("accessToken", newAccessToken, {
-            httpOnly: true,
-            sameSite: "Strict",   
+            httpOnly: true,  
             maxAge: TOKEN_EXPIRY_TIME,
           });
           
