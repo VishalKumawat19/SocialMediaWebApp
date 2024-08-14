@@ -1,5 +1,5 @@
 
-export const API_BASE_URL = 'https://verqen-api.vercel.app/api/v1'
+export const API_BASE_URL = 'https://api-verqen.vercel.app/api/v1'
 
 // Auth API routes
 export const AUTH_ROUTES = {
