@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 const generateAccessToken = require("../utils/generateAccessToken");
-const TOKEN_EXPIRY_TIME = 15 * 60 * 1000;
+const TOKEN_EXPIRY_TIME = 7 * 24 * 60 * 60 * 1000;
 const authenticateUser = (req, res, next) => {
 
   const token = req.cookies.accessToken;
