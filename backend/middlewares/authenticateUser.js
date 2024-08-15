@@ -33,6 +33,8 @@ const authenticateUser = (req, res, next) => {
             sameSite:'None',
              // Ensure this is true if using HTTPS
             maxAge: TOKEN_EXPIRY_TIME,
+             domain: 'verqen.vercel.app',
+             path: '/'
           });
           
         }
