@@ -8,7 +8,10 @@ const TOKEN_EXPIRY_TIME = 7 * 24 * 60 * 60 * 1000;
 const cookieOptions = {
   httpOnly: true,
   secure: process.env.NODE_ENV === 'production', // Ensure this is true if using HTTPS
-  sameSite: process.env.NODE_ENV === 'None' || 'strict',
+<<<<<<< HEAD
+  sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'strict',
+=======
+>>>>>>> e34f3ce12ac501333c3b216cabbec6bda559f893
   maxAge: TOKEN_EXPIRY_TIME,
 };
 
