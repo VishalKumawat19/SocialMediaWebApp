@@ -1,8 +1,9 @@
 const Profile = require("../models/profileModel");
-const Post = require('../models/postModel')
-const cloudinary = require("../config/cloudinary");
-const fs = require("fs");
-const path = require("path");
+const Post = require("../models/postModel");
+// const cloudinary = require("../config/cloudinary");
+// const fs = require("fs");
+// const path = require("path");
+const { uploadToCloudinary } = require("../config/upload");
 
 const createProfile = async (req, res, next) => {
   try {
@@ -32,8 +33,9 @@ const createProfile = async (req, res, next) => {
         message: "Profile created successfully",
       });
     } else {
-      const result = await cloudinary.uploader.upload(req.file.path);
-      fs.unlinkSync(req.file.path);
+      // const result = await cloudinary.uploader.upload(req.file.path);
+      // fs.unlinkSync(req.file.path);
+      const result = await uploadToCloudinary(req.file);
 
       const profileImage = result.secure_url;
       console.log(profileImage);
@@ -69,10 +71,12 @@ const editProfile = async (req, res, next) => {
     const profileId = profileExists._id;
 
     if (req.file) {
-      const result = await cloudinary.uploader.upload(req.file.path);
-      fs.unlinkSync(req.file.path);
+      // const result = await cloudinary.uploader.upload(req.file.path);
+      // fs.unlinkSync(req.file.path);
+      const result = await uploadToCloudinary(req.file);
+
       const profileImage = result.secure_url;
-      await Post.findOneAndUpdate({userId},{profileImage})
+      await Post.findOneAndUpdate({ userId }, { profileImage });
       await Profile.findByIdAndUpdate(
         profileId,
         { fullname, bio, gender, profileImage },

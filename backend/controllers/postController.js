@@ -1,23 +1,27 @@
 const Post = require('../models/postModel')
 const Profile = require('../models/profileModel')
-const User = require('../models/authModel')
-const cloudinary = require("../config/cloudinary");
-const fs = require('fs');
-const path = require('path');
+// const cloudinary = require("../config/cloudinary");
+// const fs = require('fs');
+// const path = require('path');
+const {uploadToCloudinary} = require('../config/upload')
+const User = require('../models/authModel');
 
 
 const createPost = async(req,res,next) =>{
     try {
         const userId = req.user
-        const {caption} = req.body
-        const result = await cloudinary.uploader.upload(req.file.path);
-        fs.unlinkSync(req.file.path);
-        const imageUrl = result.secure_url
         console.log(userId)
+        const {caption} = req.body
+        // const result = await cloudinary.uploader.upload(req.file.path);
+
+        // fs.unlinkSync(req.file.path);
+        const result = await uploadToCloudinary(req.file)
+        const imageUrl = result.secure_url
         const profile = await Profile.findOne({userId})
-        const user = await User.findById(userId)
-        const username = user.username
         console.log(profile)
+        const user = await User.findById(userId)
+        console.log(user)
+        const username = user.username
         const profileImage = profile.profileImage
         const newPost = new Post({profileImage,imageUrl,caption,userId,username})
         console.log(newPost)

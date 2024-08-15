@@ -4,7 +4,7 @@ const {
   getUserProfile,
 } = require("../controllers/profileController");
 const authenticateUser = require("../middlewares/authenticateUser");
-const upload = require("../config/multer");
+const {upload} = require("../config/upload");
 const express = require("express");
 const router = express.Router();
 
