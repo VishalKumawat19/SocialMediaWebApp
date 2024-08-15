@@ -29,7 +29,7 @@ const authenticateUser = (req, res, next) => {
           res.cookie("accessToken", newAccessToken, {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
-            sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'strict', // Ensure this is true if using HTTPS
+            sameSite:'None', // Ensure this is true if using HTTPS
             maxAge: TOKEN_EXPIRY_TIME,
           });
           
