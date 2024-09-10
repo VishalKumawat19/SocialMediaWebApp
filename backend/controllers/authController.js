@@ -11,7 +11,6 @@ const cookieOptions = {
   // secure: true,
   sameSite:'None',
   maxAge: TOKEN_EXPIRY_TIME,
-   domain: 'verqen.vercel.app',
   path: '/'
 };
 
