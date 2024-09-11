@@ -9,7 +9,7 @@ const cookieOptions = {
   secure: process.env.NODE_ENV === 'production',
   sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax',
   maxAge: TOKEN_EXPIRY_TIME,
-  path: '/'
+  // path: '/'
 };
 
 const registerUser = async (req, res, next) => {
