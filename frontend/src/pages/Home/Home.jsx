@@ -1,32 +1,44 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import styles from "./Home.module.css";
 import { getAllPosts } from "../../services/postService";
 import { useNavigate } from "react-router-dom";
 import NoDataAvailable from "../../components/NoDataAvailable/NoDataAvailable";
+import { AuthContext } from "../../ContextApi/AuthContext";
+import Spinner from "../../components/Spinner/Spinner";
 
 function Home() {
-  const navigateTo = useNavigate();
+ 
   const [posts, setPosts] = useState([]);
   const [noData, setNoData] = useState(false);
 
+  const [loading,setLoading] =useState(true)
+
   useEffect(() => {
-    // Fetch posts from the server (mock data for now)
+   
     const fetchPosts = async () => {
-      const response = await getAllPosts();
-      if (response.status == 403) {
-        return navigateTo("/");
+   
+      try {      
+        const response = await getAllPosts();
+        response && setLoading(false)
+        const posts = response.data.posts;
+        if (posts.length == 0) {
+          setNoData(true);
+        }
+        setPosts(response.data.posts);
+      } catch (error) {
+        setLoading(false)
+        console.log(error)
       }
-      const posts = response.data.posts;
-      if (posts.length == 0) {
-        setNoData(true);
-      }
-      console.log(response.data.posts);
-      setPosts(response.data.posts);
+
     };
-    fetchPosts();
+    fetchPosts()
+  
   }, []);
 
-  return noData ? (
+  if(loading) return <Spinner />;
+
+
+  return (noData ? (
     <NoDataAvailable />
   ) : (
     <div className={styles.homePage}>
@@ -53,7 +65,7 @@ function Home() {
         ))}
       </div>
     </div>
-  );
+  ))
 }
 
 export default Home;

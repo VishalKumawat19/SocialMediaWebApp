@@ -1,40 +1,53 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styles from './Login.module.css';
 import TextInput from '../../components/TextInput/TextInput';
 import PasswordInput from '../../components/PasswordInput/PasswordInput';
 import { login } from '../../services/authService';
 import Alert from '../../components/Alert/Alert';
+import { AlertContext } from '../../ContextApi/AlertContext';
+import Spinner from '../../components/Spinner/Spinner';
+import { AuthContext } from '../../ContextApi/AuthContext';
 
 function Login() {
   const navigateTo = useNavigate()
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [showAlert, setShowAlert] = useState(false);
-  const [alertType, setAlertType] = useState('success');
-  const [alertMessage, setAlertMessage] = useState('');
-
-  const handleShowAlert = (type, message) => {
-    setAlertType(type);
-    setAlertMessage(message);
-    setShowAlert(true);
-  };
-
-  const handleCloseAlert = () => {
-    setShowAlert(false);
-  };
+  const [loginData,setLoginData] = useState({username:'',password:''})
+  const { loading, setLoading,isAuthenticated,setIsAuthenticated } = useContext(AuthContext);
+  const { alert, setAlert } = useContext(AlertContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const res = await login({username,password})
+
+    if(!loginData.username || !loginData.password){
+      return setAlert({visible:true,alertType:'error',alertMessage:"Please fill all the fields"})
+    }
+    setLoading(true)
+    try {
+    const res = await login(loginData)
     console.log(res)
     if(res.status==200){
+      setLoading(false)
+      setIsAuthenticated(true)
       navigateTo('/home')
     }
     else{
-      handleShowAlert('error',res.data.message)
+      // handleShowAlert('error',res.data.message)
+      setLoading(false)
+      setAlert({visible:true,alertType:'error',alertMessage:res.data.message})
     }
-  };
+  }
+    catch (error) {
+      setLoading(false)
+      console.log(error)
+      setAlert({visible:true,alertType:'error',alertMessage:error.data.message})
+    }
+  }
+
+  const handleOnChange = (e) =>{
+    setLoginData({...loginData,[e.target.name]:e.target.value})
+  }
+
+  if(loading) return <Spinner />;
 
   return (
     <div>
@@ -46,16 +59,16 @@ function Login() {
           type="text"
           id="username"
           name="username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          value={loginData.username}
+          onChange={handleOnChange}
           
         />
         <PasswordInput
           label="Password"
           id="password"
           name="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          value={loginData.password}
+          onChange={handleOnChange}
           
         />
         <button type="submit" className={styles.submitBtn}>Login</button>
@@ -64,9 +77,7 @@ function Login() {
         New user? <Link to="/register">Register</Link>
       </p>
     </div>
-    {showAlert && (
-      <Alert type={alertType} message={alertMessage} onClose={handleCloseAlert} />
-    )}
+    <Alert />
     </div>
   );
 }

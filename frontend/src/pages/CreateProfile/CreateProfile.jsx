@@ -1,4 +1,4 @@
-import React, { useEffect, useState} from 'react';
+import React, { useContext, useEffect, useState} from 'react';
 import {useNavigate } from 'react-router-dom';
 import styles from './CreateProfile.module.css';
 import TextInput from '../../components/TextInput/TextInput';
@@ -7,6 +7,9 @@ import TextArea from '../../components/TextArea/TextArea';
 import { createProfile } from '../../services/profileService';
 import Alert from '../../components/Alert/Alert';
 import { getAllPosts } from '../../services/postService';
+import { AuthContext } from '../../ContextApi/AuthContext';
+import { AlertContext } from '../../ContextApi/AlertContext';
+import Spinner from '../../components/Spinner/Spinner';
 
 function CreateProfile() {
   const navigateTo = useNavigate()
@@ -14,29 +17,9 @@ function CreateProfile() {
   const [profileImage, setProfileImage] = useState(null);
   const [gender, setGender] = useState('');
   const [bio, setBio] = useState('');
-  const [showAlert, setShowAlert] = useState(false);
-  const [alertType, setAlertType] = useState('success'); // Can be 'success', 'error', or 'info'
-  const [alertMessage, setAlertMessage] = useState('');
-  
-  useEffect(()=>{
-    const verifyUser = async() =>{
-     const response = await getAllPosts()
-     if(response.status==403){
-       return navigateTo('/')
-     }
-    }
-    verifyUser()
-   },[])
 
-  const handleShowAlert = (type, message) => {
-    setAlertType(type);
-    setAlertMessage(message);
-    setShowAlert(true);
-  };
-
-  const handleCloseAlert = () => {
-    setShowAlert(false);
-  };
+  const [loading,setLoading] =useState(false)
+  const { alert, setAlert } = useContext(AlertContext);
 
   const handleProfileImageChange = (e) => {
     setProfileImage(e.target.files[0]);
@@ -44,6 +27,13 @@ function CreateProfile() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if(!fullname ){
+      return setAlert({visible:true,alertType:'error',alertMessage:"Please enter fullname"})
+    }
+    if(!gender){
+      return setAlert({visible:true,alertType:'error',alertMessage:"Please select gender"})
+    }
+    setLoading(true)
     // Handle form submission (e.g., send data to server)
     const formData = new FormData();
     formData.append('fullname', fullname);
@@ -52,19 +42,22 @@ function CreateProfile() {
     formData.append('bio', bio);
 
     const res = await createProfile(formData)
-    console.log(res)
+    // console.log(res)
+    res && setLoading(false)
     if(res.status==201){
-      handleShowAlert('success',res.data.message)
+      setAlert({visible:true,alertType:'success',alertMessage:res.data.message})
       setTimeout(() => {
         navigateTo('/profile')
-        setShowAlert(false)
+        setAlert({...alert,visible:false})
       }, 4000);
       
     }
     else{
-      handleShowAlert("error",res.data.message)
+      setAlert({visible:true,alertType:'error',alertMessage:res.data.message})
     }
   };
+
+  if(loading) return <Spinner />;
 
   return (
     <div>
@@ -101,9 +94,7 @@ function CreateProfile() {
         <button type="submit" className={styles.submitBtn}>Create Profile</button>
       </form>
     </div>
-    {showAlert && (
-      <Alert type={alertType} message={alertMessage} onClose={handleCloseAlert} />
-    )}
+    <Alert />
     </div>
   );
 }

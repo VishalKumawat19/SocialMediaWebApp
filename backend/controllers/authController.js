@@ -4,12 +4,10 @@ const generateRefreshToken = require("../utils/generateRefreshToken");
 const bcrypt = require('bcryptjs')
 
 const TOKEN_EXPIRY_TIME = 7 * 24 * 60 * 60 * 1000;
-
 const cookieOptions = {
   httpOnly: true,
-  secure: process.env.NODE_ENV === 'production', // Ensure this is true if using HTTPS
-  // secure: true,
-  sameSite:'None',
+  secure: process.env.NODE_ENV === 'production',
+  sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax',
   maxAge: TOKEN_EXPIRY_TIME,
   path: '/'
 };
@@ -52,14 +50,14 @@ const loginUser = async (req, res, next) => {
 
     const verifyPassword = await bcrypt.compare(password, userExists.password);
     if (!verifyPassword)
-      return res.status(401).json({ message: "Invalid credentials" });
+    return res.status(401).json({ message: "Invalid credentials" });
     req.user = userExists._id;
     const accessToken = generateAccessToken(userExists._id);
     const refreshToken = generateRefreshToken(userExists._id);
 
     res.cookie("accessToken", accessToken, cookieOptions);
     res.cookie("refreshToken", refreshToken, cookieOptions);
-
+    // console.log(accessToken,refreshToken)
     res.status(200).json({ message: "User loggedin successfully" });
   } catch (error) {
     next(error);
@@ -78,4 +76,8 @@ const logoutUser = (req,res,next) => {
    }
   };
 
-module.exports = { registerUser, loginUser, logoutUser };
+  const verifyUser = (req,res) => {
+    res.status(200).json({message:"User is verified successfully"})
+  };
+
+module.exports = { registerUser, loginUser, logoutUser,verifyUser };

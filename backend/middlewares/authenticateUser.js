@@ -1,6 +1,8 @@
 const jwt = require("jsonwebtoken");
 const generateAccessToken = require("../utils/generateAccessToken");
 const TOKEN_EXPIRY_TIME = 7 * 24 * 60 * 60 * 1000;
+
+
 const authenticateUser = (req, res, next) => {
 
   const token = req.cookies.accessToken;
@@ -25,7 +27,7 @@ const authenticateUser = (req, res, next) => {
           );
           
           req.user = decodedRefresh.id;
-          console.log(decodedRefresh.id)
+          // console.log(decodedRefresh.id)
           res.cookie("accessToken", newAccessToken, {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',

@@ -1,54 +1,62 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styles from './Register.module.css';
 import TextInput from '../../components/TextInput/TextInput';
 import PasswordInput from '../../components/PasswordInput/PasswordInput';
 import { register } from '../../services/authService';
 import Alert from '../../components/Alert/Alert';
+import { AlertContext } from '../../ContextApi/AlertContext';
+import Spinner from '../../components/Spinner/Spinner';
+import { AuthContext } from '../../ContextApi/AuthContext';
+
 
 function Register() {
   const navigateTo = useNavigate()
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [showAlert, setShowAlert] = useState(false);
-  const [alertType, setAlertType] = useState('success'); // Can be 'success', 'error', or 'info'
-  const [alertMessage, setAlertMessage] = useState('');
+  const [registerData,setRegisterData] = useState({username:'',email:'',password:''})
+  const { alert, setAlert } = useContext(AlertContext);
+  const { loading, setLoading,setIsAuthenticated } = useContext(AuthContext);
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-
-  const handleShowAlert = (type, message) => {
-    setAlertType(type);
-    setAlertMessage(message);
-    setShowAlert(true);
-  };
-
-  const handleCloseAlert = () => {
-    setShowAlert(false);
-  };
-  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const res = await register({username,email,password})
+    if(!registerData.username || !registerData.email || !registerData.password){
+      return setAlert({visible:true,alertType:'error',alertMessage:"Please fill all the fields"})
+    }
+    if(!emailRegex.test(registerData.email)){
+      return setAlert({visible:true,alertType:'error',alertMessage:"Please enter a valid email address"})
+    }
+    setLoading(true)
+    const res = await register(registerData)
     console.log(res)
     if(res.status==201){
-      handleShowAlert('success',res.data.message)
+      setIsAuthenticated(true)
+      setLoading(false)
+      setAlert({visible:true,alertType:'success',alertMessage:res.data.message})
       setTimeout(() => {
-        setShowAlert(false)
+        setAlert({...alert,visible:false})
         navigateTo('/home')
       }, 5000);
       
     }
     else{
-      handleShowAlert('error',res.data.message)
+      setLoading(false)
+      setAlert({visible:true,alertType:'error',alertMessage:res.data.message})
       setTimeout(() => {
-        setShowAlert(false)
+        setAlert({...alert,visible:false})
       }, 5000);
     }
   };
 
+  const handleOnChange = (e) =>{
+   setRegisterData({...registerData,[e.target.name]:e.target.value})
+  }
+
+  if(loading) return <Spinner />;
+
   return (
     <div>
+      
     <div className={styles.registerPage}>
       <h2 className={styles.heading}>Register</h2>
       <form onSubmit={handleSubmit}>
@@ -57,8 +65,8 @@ function Register() {
           type="text"
           id="username"
           name="username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          value={registerData.username}
+          onChange={handleOnChange}
           
         />
         <TextInput
@@ -66,16 +74,16 @@ function Register() {
           // type="email"
           id="email"
           name="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          value={registerData.email}
+          onChange={handleOnChange}
           
         />
         <PasswordInput
           label="Password"
           id="password"
           name="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          value={registerData.password}
+          onChange={handleOnChange}
           
         />
         <button type="submit" className={styles.submitBtn}>Register</button>
@@ -85,9 +93,7 @@ function Register() {
       </p>
       
     </div>
-    {showAlert && (
-      <Alert type={alertType} message={alertMessage} onClose={handleCloseAlert} />
-    )}
+    <Alert />
     </div>
   );
 }

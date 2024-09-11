@@ -3,6 +3,7 @@ import styles from './MyPosts.module.css';
 import { deletePost, getUserPosts } from '../../services/postService';
 import { useNavigate } from 'react-router-dom';
 import NoDataAvailable from '../../components/NoDataAvailable/NoDataAvailable';
+import Spinner from '../../components/Spinner/Spinner';
 
 
 function MyPosts() {
@@ -10,32 +11,55 @@ function MyPosts() {
   const [posts, setPosts] = useState([]);
   const [noData, setNoData] = useState(false);
 
+
+  const [loading,setLoading] =useState(true)
   useEffect(() => {
     // Fetch user's posts from the server (mock data for now)
     const fetchPosts = async () => {
       const response = await getUserPosts();
-      if(response.status==403){
-        return navigateTo('/')
-      }
+      response && setLoading(false)
       const data = response.data.posts
       if (data.length == 0) {
         setNoData(true);
       }
-      console.log(response.data.posts)
       if(response.data.posts){
         const userPosts = response.data.posts
         setPosts(userPosts);
       }
-      console.log(posts)
     };
     fetchPosts();
   }, []);
 
   const handleDelete = async (postId) => {
     // Delete post
-    await deletePost(postId)
-    setPosts(posts.filter(post => post._id !== postId));
+    // setLoading(true)
+    // const deleteRequest = await deletePost(postId)
+    // deleteRequest && setLoading(false)
+    // setPosts(posts.filter(post => post._id !== postId));
+    // if(!posts){
+    //   setNoData(true);
+    // }
+    setLoading(true);
+    try {
+        const deleteRequest = await deletePost(postId);
+
+        if (deleteRequest) {
+            // Update posts and check if it's empty
+            setPosts((prevPosts) => {
+                const updatedPosts = prevPosts.filter(post => post._id !== postId);
+                setNoData(updatedPosts.length === 0); // Set noData if posts are empty
+                return updatedPosts;
+            });
+        }
+    } catch (error) {
+        console.error("Failed to delete post", error);
+        // Handle error if necessary
+    } finally {
+        setLoading(false);
+    }
   };
+
+  if(loading) return <Spinner />;
 
   return noData?(<NoDataAvailable />):(
     <div className={styles.myPostsPage}>

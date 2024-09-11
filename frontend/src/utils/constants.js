@@ -1,11 +1,13 @@
 
 // export const API_BASE_URL = 'https://api-verqen.vercel.app/api/v1'
 
-export const API_BASE_URL = 'https://api-verqen.vercel.app/api/v1'
+// export const API_BASE_URL = 'http://localhost:9000/api/v1'
+export const API_BASE_URL = 'https://api-verqen.vercel.app'
 // Auth API routes
 export const AUTH_ROUTES = {
   REGISTER: `${API_BASE_URL}/auth/register`,
   LOGIN: `${API_BASE_URL}/auth/login`,
+  VERIFY_USER: `${API_BASE_URL}/auth/verify`,
   LOGOUT: `${API_BASE_URL}/auth/logout`
 };
 

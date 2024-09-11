@@ -1,22 +1,19 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useContext } from 'react';
+import { AlertContext } from '../../ContextApi/AlertContext';
 import styles from './Alert.module.css';
 
-const Alert = ({ type, message, onClose }) => {
+const Alert = () => {
+  const {alert, setAlert,handleCloseAlert } = useContext(AlertContext);
+  const {visible,alertType,alertMessage} = alert;
+  if (!visible) return null; 
   return (
-    <div className={`${styles.alert} ${styles[type]}`}>
-      <span>{message}</span>
-      <button className={styles.closeBtn} onClick={onClose}>
+    <div className={`${styles.alert} ${styles[alertType]}`}>
+      <span>{alertMessage}</span>
+      <button className={styles.closeBtn} onClick={handleCloseAlert}>
         &times;
       </button>
     </div>
   );
-};
-
-Alert.propTypes = {
-  type: PropTypes.oneOf(['success', 'error', 'info']).isRequired,
-  message: PropTypes.string.isRequired,
-  onClose: PropTypes.func.isRequired,
 };
 
 export default Alert;

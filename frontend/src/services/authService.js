@@ -19,6 +19,17 @@ export const login = async (credentials) => {
   }
 };
 
+export const verifyUser = async () => {
+  try {
+    const response = await axiosInstance.get(AUTH_ROUTES.VERIFY_USER);
+    return response;
+  } catch (error) {
+    return error.response;
+  }
+};
+
+
+
 export const logout = async () => {
   try {
     const response = await axiosInstance.get(AUTH_ROUTES.LOGOUT);

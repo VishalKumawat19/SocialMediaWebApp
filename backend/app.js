@@ -11,8 +11,8 @@ const errorHandler = require('./utils/errorHandler')
 //     next();
 // });
 const corsOptions = {
-    origin: "https://verqen.vercel.app",
-    // origin:'http://localhost:5173',
+    origin: process.env.CLIENT_URL,
+    // origin:'http://localhost:5173/',
     credentials: true
 
 }

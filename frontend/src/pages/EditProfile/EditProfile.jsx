@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import {useNavigate } from 'react-router-dom';
 import styles from './EditProfile.module.css';
 import TextInput from '../../components/TextInput/TextInput';
@@ -6,6 +6,9 @@ import FileUpload from '../../components/FileUpload/FileUpload';
 import TextArea from '../../components/TextArea/TextArea';
 import { getProfile, updateProfile } from '../../services/profileService';
 import Alert from '../../components/Alert/Alert';
+import { AuthContext } from '../../ContextApi/AuthContext';
+import { AlertContext } from '../../ContextApi/AlertContext';
+import Spinner from '../../components/Spinner/Spinner';
 
 function EditProfile() {
   const navigateTo = useNavigate()
@@ -13,26 +16,15 @@ function EditProfile() {
   const [profileImage, setProfileImage] = useState(null);
   const [gender, setGender] = useState('');
   const [bio, setBio] = useState('');
-  const [showAlert, setShowAlert] = useState(false);
-  const [alertType, setAlertType] = useState('success'); // Can be 'success', 'error', or 'info'
-  const [alertMessage, setAlertMessage] = useState('');
-
-  const handleShowAlert = (type, message) => {
-    setAlertType(type);
-    setAlertMessage(message);
-    setShowAlert(true);
-  };
-
-  const handleCloseAlert = () => {
-    setShowAlert(false);
-  };
-
+  const [loading,setLoading] =useState(true)
+  const { alert, setAlert } = useContext(AlertContext);
 
   useEffect(() => {
     // Fetch profile data from the server
     const fetchProfile = async () => {
-     
+      setLoading(true)
       const response = await getProfile()
+      response && setLoading(false)
       if(response.status==403){
        return navigateTo('/')
       }
@@ -52,6 +44,7 @@ function EditProfile() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true)
     const formData = new FormData();
     formData.append('fullname', fullname);
     formData.append('profileImage', profileImage);
@@ -59,19 +52,23 @@ function EditProfile() {
     formData.append('bio', bio);
 
     const response = await updateProfile(formData)
+    response && setLoading(false)
     console.log(response)
     if(response.status==200){
-      handleShowAlert('success',response.data.message)
+      setAlert({visible:true,alertType:'success',alertMessage:response.data.message})
       setTimeout(() => {
         navigateTo('/profile')
-        setShowAlert(false)
+        setAlert({...alert,visible:false})
       }, 4000);
      
     }
     else{
-      handleShowAlert('error',response.data.message)
+      setAlert({visible:true,alertType:'error',alertMessage:response.data.message})
     }
   };
+
+
+  if(loading) return <Spinner />;
 
   return (
     <div>
@@ -109,9 +106,7 @@ function EditProfile() {
         <button type="submit" className={styles.submitBtn}>Save Changes</button>
       </form>
     </div>
-    {showAlert && (
-      <Alert type={alertType} message={alertMessage} onClose={handleCloseAlert} />
-    )}
+    <Alert />
     </div>
     
   

@@ -1,7 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styles from './SeeProfile.module.css';
 import { getProfile } from '../../services/profileService';
+import { AuthContext } from '../../ContextApi/AuthContext';
+import { AlertContext } from '../../ContextApi/AlertContext';
+import Spinner from '../../components/Spinner/Spinner';
 
 function SeeProfile() {
   const navigateTo = useNavigate()
@@ -12,14 +15,16 @@ function SeeProfile() {
     bio: '',
   });
 
+  
+  const [loading,setLoading] =useState(true)
+  const { alert, setAlert } = useContext(AlertContext);
+
   useEffect(() => {
     // Fetch profile data from the server (mock data for now)
     const fetchProfile = async () => {
+      // setLoading(true)
       const response = await getProfile();
-      if(response.status==403){
-        return navigateTo('/')
-      }
-      console.log(response)
+      response&&setLoading(false)
       if(response.status==200 && !response.data.profile){
         navigateTo('/profile/new')
       }
@@ -31,6 +36,8 @@ function SeeProfile() {
     };
     fetchProfile();
   }, []);
+
+  if(loading) return <Spinner />;
 
   return (
     <div className={styles.profilePage}>
