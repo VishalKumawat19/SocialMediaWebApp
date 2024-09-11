@@ -7,7 +7,7 @@ function Navbar() {
   const navigateTo = useNavigate()
   const logoutHandler = async() =>{
     const response = await logout()
-    if(response){
+    if(response.status==200){
       navigateTo('/')
     }
   }

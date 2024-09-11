@@ -31,12 +31,8 @@ const authenticateUser = (req, res, next) => {
           res.cookie("accessToken", newAccessToken, {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
-            // secure: true,
-            sameSite:'None',
-             // Ensure this is true if using HTTPS
-            maxAge: TOKEN_EXPIRY_TIME,
-             domain: 'verqen.vercel.app',
-             path: '/'
+            sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax',
+            maxAge: TOKEN_EXPIRY_TIME
           });
           
         }

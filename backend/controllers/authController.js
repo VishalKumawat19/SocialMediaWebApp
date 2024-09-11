@@ -8,8 +8,7 @@ const cookieOptions = {
   httpOnly: true,
   secure: process.env.NODE_ENV === 'production',
   sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax',
-  maxAge: TOKEN_EXPIRY_TIME,
-  // path: '/'
+  maxAge: TOKEN_EXPIRY_TIME
 };
 
 const registerUser = async (req, res, next) => {
