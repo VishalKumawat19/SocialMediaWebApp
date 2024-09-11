@@ -3,7 +3,7 @@ import axios from 'axios';
 // Create an Axios instance
 const axiosInstance = axios.create({
   // baseURL: 'http://localhost:9000/api/v1',
-  baseURL: 'https://api-verqen.vercel.app/api/v1',
+  baseURL: 'https://api-verqen.vercel.app',
   withCredentials: true, // Allows sending cookies with requests
 });
 
