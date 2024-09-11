@@ -6,8 +6,10 @@ import { logout } from '../../services/authService';
 function Navbar() {
   const navigateTo = useNavigate()
   const logoutHandler = async() =>{
-    await logout()
-    navigateTo('/')
+    const response = await logout()
+    if(response){
+      navigateTo('/')
+    }
   }
   return (
     <nav className={styles.navbar}>
