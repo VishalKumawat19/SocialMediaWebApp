@@ -1,13 +1,16 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styles from './Navbar.module.css';
 import { logout } from '../../services/authService';
+import { AuthContext } from '../../ContextApi/AuthContext';
 
 function Navbar() {
+  const { isAuthenticated,setIsAuthenticated} = useContext(AuthContext);
   const navigateTo = useNavigate()
   const logoutHandler = async() =>{
     const response = await logout()
     if(response.status==200){
+      setIsAuthenticated(false)
       navigateTo('/')
     }
   }
