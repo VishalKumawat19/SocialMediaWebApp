@@ -6,16 +6,8 @@
   padding: 10px 20px;
   background-color: #007bff;
   color: white;
-  position: sticky; /* Sticky position to keep it at the top while scrolling */
-  top: 0;
-  width: 100%;
-  z-index: 1000; /* Ensures it stays above other content */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adds a shadow for a 3D effect */
-  transition: background-color 0.3s ease; /* Smooth transition for background color */
-}
-
-.navbar.sticky {
-  background-color: #0056b3; /* Darker shade for the sticky navbar */
+  
+  
 }
 
 .leftLinks {
@@ -26,12 +18,10 @@
 .leftLinks a {
   color: white;
   text-decoration: none;
-  font-weight: bold;
-  transition: color 0.3s ease; /* Smooth transition for text color */
 }
 
 .leftLinks a:hover {
-  color: #e0e0e0; /* Lighter color on hover */
+  text-decoration: underline;
 }
 
 .rightLinks {
@@ -47,7 +37,6 @@
   border-radius: 4px;
   cursor: pointer;
   font-size: 14px;
-  transition: background-color 0.3s ease; /* Smooth transition for background color */
 }
 
 .logoutBtn:hover {
