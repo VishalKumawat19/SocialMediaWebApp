@@ -24,9 +24,19 @@ function Navbar() {
 
   if(loading) return <Spinner />;
 
+  const handleLogoClick = () => {
+    navigate('/home'); // Redirect to /home on logo click
+  };
+
   return (
     <nav className={styles.navbar}>
       <div className={styles.leftLinks}>
+        <img
+          src={logo}
+          alt="Logo"
+          className={styles.logo}
+          onClick={handleLogoClick} // Click event for the logo
+        />
         <Link to="/home">Home</Link>
         <Link to="/profile">Profile</Link>
         <Link to="/post/new">Create Post</Link>
@@ -37,7 +47,7 @@ function Navbar() {
       </div>
     </nav>
   );
-}
+};
 
 export default Navbar;
 
