@@ -10,8 +10,8 @@ const cookieOptions = {
   secure: process.env.NODE_ENV === 'production',
   sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax',
   maxAge: TOKEN_EXPIRY_TIME,
-  domain:'.vercel.app',
-  path:'/'
+  // domain:'.vercel.app',
+  // path:'/'
 }
 
 
@@ -19,8 +19,8 @@ const logoutCookieOptions = {
   httpOnly: true,
   secure: process.env.NODE_ENV === 'production',
   sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax',
-  domain:'.vercel.app',
-  path:'/',
+  // domain:'.vercel.app',
+  // path:'/',
 }
 
 const registerUser = async (req, res, next) => {

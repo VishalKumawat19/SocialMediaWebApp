@@ -7,8 +7,8 @@ const cookieOptions = {
   secure: process.env.NODE_ENV === 'production',
   sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax',
   maxAge: TOKEN_EXPIRY_TIME,
-  domain:'.vercel.app',
-  path:'/'
+  // domain:'.vercel.app',
+  // path:'/'
 }
 
 const authenticateUser = (req, res, next) => {
