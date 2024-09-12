@@ -19,6 +19,7 @@ const logoutCookieOptions = {
   httpOnly: true,
   secure: process.env.NODE_ENV === 'production',
   sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax',
+  expires: new Date(0),
   // domain:'.vercel.app',
   // path:'/',
 }
