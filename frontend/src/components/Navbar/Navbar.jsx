@@ -1,19 +1,29 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styles from './Navbar.module.css';
 import { logout } from '../../services/authService';
 import { AuthContext } from '../../ContextApi/AuthContext';
+import Spinner from '../Spinner/Spinner';
 
 function Navbar() {
   const { isAuthenticated,setIsAuthenticated} = useContext(AuthContext);
+  const [loading,setLoading] =useState(false)
   const navigateTo = useNavigate()
+
+
+  
   const logoutHandler = async() =>{
+    setLoading(true)
     const response = await logout()
     if(response.status==200){
+      setLoading(false)
       setIsAuthenticated(false)
       navigateTo('/')
     }
   }
+
+  if(loading) return <Spinner />;
+
   return (
     <nav className={styles.navbar}>
       <div className={styles.leftLinks}>
