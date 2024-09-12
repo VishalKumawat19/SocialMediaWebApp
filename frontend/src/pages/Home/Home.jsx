@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import NoDataAvailable from "../../components/NoDataAvailable/NoDataAvailable";
 import { AuthContext } from "../../ContextApi/AuthContext";
 import Spinner from "../../components/Spinner/Spinner";
+import ImageComponent from "../../components/ImageComponent/ImageComponent";
 
 function Home() {
  
@@ -35,7 +36,7 @@ function Home() {
   
   }, []);
 
-  if(loading) return <Spinner />;
+  if(loading) return <ImageComponent />;
 
 
   return (noData ? (
