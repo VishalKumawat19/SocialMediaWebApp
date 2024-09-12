@@ -14,6 +14,15 @@ const cookieOptions = {
   path:'/'
 }
 
+
+const logoutCookieOptions = {
+  httpOnly: true,
+  secure: process.env.NODE_ENV === 'production',
+  sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax',
+  domain:'.vercel.app',
+  path:'/'
+}
+
 const registerUser = async (req, res, next) => {
   try {
     const { username, email, password } = req.body;
@@ -68,8 +77,8 @@ const loginUser = async (req, res, next) => {
 
 const logoutUser = (req,res,next) => {
    try {
-    res.clearCookie("refreshToken",cookieOptions);
-    res.clearCookie("accessToken",cookieOptions);
+    res.clearCookie("refreshToken",logoutCookieOptions);
+    res.clearCookie("accessToken",logoutCookieOptions);
     res.status(200).json({message:"User logged out successfully"})
    } catch (error) {
     next(error)
