@@ -7,6 +7,7 @@ const {uploadToCloudinary} = require('../config/upload')
 const User = require('../models/authModel');
 
 
+const noProfileImageURL= "https://collection.cloudinary.com/df5qnxlqb/c08e1288fdbdf759b7f9befc0dc48de2";
 const createPost = async(req,res,next) =>{
     try {
         const userId = req.user
@@ -18,13 +19,18 @@ const createPost = async(req,res,next) =>{
         const result = await uploadToCloudinary(req.file)
         const imageUrl = result.secure_url
         const profile = await Profile.findOne({userId})
-        console.log(profile)
+        if(!profile){
         const user = await User.findById(userId)
-        console.log(user)
+        const username = user.username
+        const profileImage = noProfileImageURL;
+        const newPost = new Post({profileImage,imageUrl,caption,userId,username})
+        await newPost.save()
+        return res.status(201).json({message:"Post created successfully"})
+        }
+        const user = await User.findById(userId)
         const username = user.username
         const profileImage = profile.profileImage
         const newPost = new Post({profileImage,imageUrl,caption,userId,username})
-        console.log(newPost)
         await newPost.save()
         res.status(201).json({message:"Post created successfully"})
     } catch (error) {
