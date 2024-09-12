@@ -21,7 +21,6 @@ const logoutCookieOptions = {
   sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax',
   domain:'.vercel.app',
   path:'/',
-  expires: new Date(0)
 }
 
 const registerUser = async (req, res, next) => {
