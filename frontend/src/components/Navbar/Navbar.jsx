@@ -4,6 +4,7 @@ import styles from './Navbar.module.css';
 import { logout } from '../../services/authService';
 import { AuthContext } from '../../ContextApi/AuthContext';
 import Spinner from '../Spinner/Spinner';
+import logo from '../../assets/social_no_bg.png';
 
 function Navbar() {
   const { isAuthenticated,setIsAuthenticated} = useContext(AuthContext);
