@@ -19,7 +19,6 @@ const logoutCookieOptions = {
   httpOnly: true,
   secure: process.env.NODE_ENV === 'production',
   sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax',
-  expires: new Date(0),
   // domain:'.vercel.app',
   // path:'/',
 }
@@ -78,6 +77,7 @@ const loginUser = async (req, res, next) => {
 
 const logoutUser = (req,res,next) => {
    try {
+    res.setHeader('Cache-Control', 'no-store','must-revalidate');
     res.clearCookie("refreshToken",logoutCookieOptions);
     res.clearCookie("accessToken",logoutCookieOptions);
     res.status(200).json({message:"User logged out successfully"})
