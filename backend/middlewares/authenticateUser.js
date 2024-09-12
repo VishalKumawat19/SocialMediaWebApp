@@ -52,4 +52,4 @@ const authenticateUser = (req, res, next) => {
   });
 };
 
-module.exports = {authenticateUser,cookieOptions};
+module.exports = authenticateUser

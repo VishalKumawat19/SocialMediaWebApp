@@ -1,8 +1,18 @@
 const User = require("../models/authModel");
 const generateAccessToken = require("../utils/generateAccessToken");
 const generateRefreshToken = require("../utils/generateRefreshToken");
-const {cookieOptions} = require('../middlewares/authenticateUser')
 const bcrypt = require('bcryptjs')
+
+const TOKEN_EXPIRY_TIME = 7 * 24 * 60 * 60 * 1000;
+
+const cookieOptions = {
+  httpOnly: true,
+  secure: process.env.NODE_ENV === 'production',
+  sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax',
+  maxAge: TOKEN_EXPIRY_TIME,
+  domain:'.vercel.app',
+  path:'/'
+}
 
 const registerUser = async (req, res, next) => {
   try {
