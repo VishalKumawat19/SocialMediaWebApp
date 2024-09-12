@@ -38,7 +38,11 @@ const createProfile = async (req, res, next) => {
       const result = await uploadToCloudinary(req.file);
 
       const profileImage = result.secure_url;
-      console.log(profileImage);
+      const posts = Post.find({userId});
+
+      if(posts){
+        await Post.updateMany({ userId }, { profileImage });
+      }
 
       const newProfile = new Profile({
         userId,
@@ -76,7 +80,11 @@ const editProfile = async (req, res, next) => {
       const result = await uploadToCloudinary(req.file);
 
       const profileImage = result.secure_url;
-      await Post.findOneAndUpdate({ userId }, { profileImage });
+      const posts = Post.find({userId});
+
+      if(posts){
+        await Post.updateMany({ userId }, { profileImage });
+      }
       await Profile.findByIdAndUpdate(
         profileId,
         { fullname, bio, gender, profileImage },
