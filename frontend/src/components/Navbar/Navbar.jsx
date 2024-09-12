@@ -26,7 +26,7 @@ function Navbar() {
   if(loading) return <Spinner />;
 
   const handleLogoClick = () => {
-    navigate('/home'); // Redirect to /home on logo click
+    navigateTo('/home'); // Redirect to /home on logo click
   };
 
   return (
