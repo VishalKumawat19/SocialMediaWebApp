@@ -7,7 +7,7 @@ const {uploadToCloudinary} = require('../config/upload')
 const User = require('../models/authModel');
 
 
-const noProfileImageURL= "https://collection.cloudinary.com/df5qnxlqb/c08e1288fdbdf759b7f9befc0dc48de2";
+const noProfileImageURL= "https://res.cloudinary.com/df5qnxlqb/image/upload/fl_preserve_transparency/v1723465359/vwwwsyridynhwf54anco.jpg?_s=public-apps";
 const createPost = async(req,res,next) =>{
     try {
         const userId = req.user
