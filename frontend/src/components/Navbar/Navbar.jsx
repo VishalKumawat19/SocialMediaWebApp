@@ -4,13 +4,15 @@ import styles from './Navbar.module.css';
 import { logout } from '../../services/authService';
 
 function Navbar() {
-  const navigateTo = useNavigate()
-  const logoutHandler = async() =>{
-    const response = await logout()
-    if(response.status==200){
-      navigateTo('/')
+  const navigateTo = useNavigate();
+
+  const logoutHandler = async () => {
+    const response = await logout();
+    if (response.status === 200) {
+      navigateTo('/');
     }
-  }
+  };
+
   return (
     <nav className={styles.navbar}>
       <div className={styles.leftLinks}>
