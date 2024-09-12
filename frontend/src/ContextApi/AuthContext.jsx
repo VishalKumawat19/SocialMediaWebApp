@@ -2,6 +2,7 @@ import React, { createContext, useEffect, useState } from "react";
 import Spinner from "../components/Spinner/Spinner";
 import { useLocation, useNavigate } from "react-router-dom";
 import { verifyUser } from "../services/authService";
+import ImageComponent from "../components/ImageComponent/ImageComponent";
 
 const AuthContext = createContext();
 
@@ -43,7 +44,7 @@ const AuthProvider = ({ children }) => {
   }, []);
 
 
-  if(loading) return <Spinner />;
+  if(loading) return <ImageComponent />;
 
   return (
     <AuthContext.Provider value={{ loading,setLoading,isAuthenticated, setIsAuthenticated}}>
