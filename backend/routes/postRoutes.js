@@ -1,5 +1,5 @@
 const {createPost,getUserPosts,deletePost,getAllPost} = require('../controllers/postController')
-const authenticateUser = require('../middlewares/authenticateUser')
+const {authenticateUser} = require('../middlewares/authenticateUser')
 const express = require('express')
 const router = express.Router()
 const {upload} = require('../config/upload')

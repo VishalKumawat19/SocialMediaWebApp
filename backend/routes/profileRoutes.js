@@ -3,7 +3,7 @@ const {
   editProfile,
   getUserProfile,
 } = require("../controllers/profileController");
-const authenticateUser = require("../middlewares/authenticateUser");
+const {authenticateUser} = require("../middlewares/authenticateUser");
 const {upload} = require("../config/upload");
 const express = require("express");
 const router = express.Router();

@@ -4,15 +4,8 @@ const cookieParser = require('cookie-parser')
 const cors = require('cors')
 const errorHandler = require('./utils/errorHandler')
 
-
-// app.use((req, res, next) => {
-//     res.header("Access-Control-Allow-Origin", "*");
-//     res.header("Access-Control-Allow-Headers", "Authorization, Origin, X-Requested-With, Content-Type, Accept");
-//     next();
-// });
 const corsOptions = {
     origin: process.env.CLIENT_URL,
-    // origin:'http://localhost:5173/',
     credentials: true
 
 }
