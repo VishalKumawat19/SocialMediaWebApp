@@ -8,6 +8,7 @@ import Alert from '../../components/Alert/Alert';
 import { AlertContext } from '../../ContextApi/AlertContext';
 import Spinner from '../../components/Spinner/Spinner';
 import { AuthContext } from '../../ContextApi/AuthContext';
+import ImageComponent from '../../components/ImageComponent/ImageComponent';
 
 function Login() {
   const navigateTo = useNavigate()
@@ -47,7 +48,7 @@ function Login() {
     setLoginData({...loginData,[e.target.name]:e.target.value})
   }
 
-  if(loading) return <Spinner />;
+  if(loading) return <ImageComponent />;
 
   return (
     <div>

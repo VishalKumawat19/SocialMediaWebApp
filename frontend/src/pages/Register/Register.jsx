@@ -8,6 +8,7 @@ import Alert from '../../components/Alert/Alert';
 import { AlertContext } from '../../ContextApi/AlertContext';
 import Spinner from '../../components/Spinner/Spinner';
 import { AuthContext } from '../../ContextApi/AuthContext';
+import ImageComponent from '../../components/ImageComponent/ImageComponent';
 
 
 function Register() {
@@ -52,7 +53,7 @@ function Register() {
    setRegisterData({...registerData,[e.target.name]:e.target.value})
   }
 
-  if(loading) return <Spinner />;
+  if(loading) return <ImageComponent />;
 
   return (
     <div>
