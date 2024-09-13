@@ -4,6 +4,7 @@
   background-color: #f9f9f9;
   max-width: 600px;
   margin: 0 auto;
+  padding-top: 80px;
 }
 
 .profileContainer {
@@ -52,6 +53,9 @@
 }
 
 @media (max-width: 768px) {
+  .profilePage{
+    padding-top: 250px;
+  }
   .profileContainer {
     width: 90%;
     padding: 15px;
