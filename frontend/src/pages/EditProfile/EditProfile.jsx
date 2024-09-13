@@ -55,12 +55,7 @@ function EditProfile() {
     response && setLoading(false)
     console.log(response)
     if(response.status==200){
-      setAlert({visible:true,alertType:'success',alertMessage:response.data.message})
-      setTimeout(() => {
-        navigateTo('/profile')
-        setAlert({...alert,visible:false})
-      }, 4000);
-     
+        navigateTo('/profile') 
     }
     else{
       setAlert({visible:true,alertType:'error',alertMessage:response.data.message})
