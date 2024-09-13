@@ -72,6 +72,7 @@ function EditProfile() {
 
   return (
     <div>
+    
     <div className={styles.editProfilePage}>
       <h2 className={styles.heading}>Edit Profile</h2>
       <form onSubmit={handleSubmit} className={styles.form}>
@@ -106,10 +107,9 @@ function EditProfile() {
         <button type="submit" className={styles.submitBtn}>Save Changes</button>
       </form>
     </div>
-    <Alert />
-    </div>
     
-  
+    <Alert /> 
+  </div>
   );
 }
 
