@@ -41,7 +41,6 @@ function SeeProfile() {
 
   return (
     <>
-      <Navbar /> {/* Include the Navbar component you created earlier */}
       <div className={styles.profilePage}>
         <div className={styles.profileContainer}>
           <img src={profile.profileImage} alt="Profile" className={styles.profileImage} />
