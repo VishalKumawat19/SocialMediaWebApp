@@ -40,16 +40,19 @@ function SeeProfile() {
   if(loading) return <Spinner />;
 
   return (
-    <div className={styles.profilePage}>
-      <div className={styles.profileContainer}>
-        <img src={profile.profileImage} alt="Profile" className={styles.profileImage} />
-        <h2 className={styles.fullname}>{profile.fullname}</h2>
-        <p className={styles.gender}>Gender: {profile.gender}</p>
-        <p className={styles.bio}>{profile.bio}</p>
-        <Link to="/profile/modify" className={styles.editBtn}>Edit Profile</Link>
+    <>
+      <div className={styles.profilePage}>
+        <div className={styles.profileContainer}>
+          <img src={profile.profileImage} alt="Profile" className={styles.profileImage} />
+          <h2 className={styles.fullname}>{profile.fullname}</h2>
+          <p className={styles.gender}>Gender: {profile.gender}</p>
+          <p className={styles.bio}>{profile.bio}</p>
+          <Link to="/profile/modify" className={styles.editBtn}>Edit Profile</Link>
+        </div>
       </div>
-    </div>
+    </>
   );
+  
   
 }
 
