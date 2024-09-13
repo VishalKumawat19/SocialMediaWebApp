@@ -3,7 +3,7 @@
   background-color: #f9f9f9;
   max-width: 700px; /* Increased width for a more modern feel */
   margin: 0 auto;
-  padding-top: 100px; /* Ensure space for the fixed navbar */
+  padding-top: 80px; /* Ensure space for the fixed navbar */
   border-radius: 10px; /* Rounded edges for a softer look */
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Light shadow for a card effect */
   background-color: #ffffff; /* White background for contrast */
@@ -79,7 +79,6 @@
   .editProfilePage {
     width: 90%;
     padding: 15px;
-    padding-top: 120px; /* Ensure enough padding below the navbar */
   }
 
   .heading {

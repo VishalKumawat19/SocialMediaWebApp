@@ -54,9 +54,6 @@
 }
 
 @media (max-width: 768px) {
-  .myPostsPage{
-    padding-top: 250px;
-  }
   .post {
     width: calc(100% - 20px); /* Single post per row on smaller screens */
   }

@@ -62,9 +62,7 @@
 }
 
 @media (max-width: 768px) {
-  .homePage{
-    padding-top: 250px;
-  }
+  
   .postsContainer {
     padding: 10px;
   }
