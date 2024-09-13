@@ -1,9 +1,9 @@
 .profilePage {
-  height: 100vh; /* Take the full height of the viewport */
+  height: 100vh; /* Full viewport height */
   display: flex;
   justify-content: center;
   align-items: center;
-  padding-top: 60px; /* Ensure it's below the fixed navbar */
+  padding-top: 60px; /* Below the navbar */
   background-color: #f4f4f4;
   box-sizing: border-box;
 }
@@ -15,39 +15,57 @@
   justify-content: center;
   background-color: white;
   border-radius: 10px;
-  padding: 20px;
+  padding: 30px;
   box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
-  max-width: 400px;
+  max-width: 500px; /* Increased width */
+  max-height: 80vh; /* Max height to prevent overflow */
   text-align: center;
+  overflow: hidden; /* Hide overflow */
 }
 
 .profileImage {
-  width: 120px;
-  height: 120px;
+  width: 140px; /* Increased size */
+  height: 140px;
   border-radius: 50%;
   object-fit: cover;
   margin-bottom: 15px;
 }
 
 .fullname {
-  font-size: 24px;
+  font-size: 26px;
   color: #333;
   margin-bottom: 10px;
 }
 
-.gender, .bio {
-  font-size: 16px;
+.gender {
+  font-size: 18px;
   color: #555;
   margin-bottom: 10px;
 }
 
+.bioContainer {
+  max-height: 150px; /* Restrict bio height */
+  overflow-y: auto; /* Scroll if bio is too long */
+  width: 100%; /* Take full width */
+  padding: 10px;
+  border-top: 1px solid #ddd;
+  margin-bottom: 15px;
+}
+
+.bio {
+  font-size: 16px;
+  color: #555;
+  word-wrap: break-word;
+  text-align: left; /* Align text left */
+}
+
 .editBtn {
-  padding: 10px 20px;
+  padding: 12px 25px;
   background-color: #007bff;
   color: white;
   text-decoration: none;
   border-radius: 5px;
-  font-size: 16px;
+  font-size: 18px;
   cursor: pointer;
 }
 
@@ -55,15 +73,15 @@
   background-color: #0056b3;
 }
 
-/* Ensure no scrolling on smaller screens */
+/* Responsive Adjustments */
 @media (max-width: 768px) {
   .profileContainer {
     width: 90%;
-    padding: 15px;
+    max-height: 80vh;
   }
 
   .fullname {
-    font-size: 20px;
+    font-size: 22px;
   }
 
   .gender, .bio {
@@ -71,6 +89,7 @@
   }
 
   .editBtn {
-    font-size: 14px;
+    font-size: 16px;
   }
 }
+

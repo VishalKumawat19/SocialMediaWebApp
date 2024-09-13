@@ -46,12 +46,15 @@ function SeeProfile() {
           <img src={profile.profileImage} alt="Profile" className={styles.profileImage} />
           <h2 className={styles.fullname}>{profile.fullname}</h2>
           <p className={styles.gender}>Gender: {profile.gender}</p>
-          <p className={styles.bio}>{profile.bio}</p>
+          <div className={styles.bioContainer}>
+            <p className={styles.bio}>{profile.bio}</p>
+          </div>
           <Link to="/profile/modify" className={styles.editBtn}>Edit Profile</Link>
         </div>
       </div>
     </>
   );
+  
   
   
 }
