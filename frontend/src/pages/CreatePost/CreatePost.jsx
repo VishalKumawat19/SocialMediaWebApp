@@ -48,7 +48,6 @@ function CreatePost() {
 
   return (
     <>
- <div>
       <div className={styles.createPostPage}>
         <h2 className={styles.heading}>Create Post</h2>
         <form onSubmit={handleSubmit}>
@@ -57,15 +56,12 @@ function CreatePost() {
             label="Caption"
             value={caption}
             onChange={(e) => setCaption(e.target.value)}
-           
           />
           <button type="submit" className={styles.submitBtn}>Post</button>
         </form>
       </div>
       <Alert />
-    </div>
     </>
   );
 }
-
 export default CreatePost;
