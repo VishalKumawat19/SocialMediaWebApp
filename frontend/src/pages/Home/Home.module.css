@@ -4,6 +4,7 @@
   justify-content: center;
   padding: 20px;
   background-color: #f9f9f9;
+  padding-top: 80px;
 }
 
 .postsContainer {
@@ -61,6 +62,9 @@
 }
 
 @media (max-width: 768px) {
+  .homePage{
+    padding-top: 100px;
+  }
   .postsContainer {
     padding: 10px;
   }
