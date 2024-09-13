@@ -1,11 +1,22 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+}
+
 .profilePage {
-  height: 100vh; /* Full viewport height */
+  height: calc(100vh - 70px); /* Full height minus navbar height */
   display: flex;
   justify-content: center;
   align-items: center;
-  padding-top: 60px; /* Below the navbar */
+  padding-top: 70px; /* Space for the navbar */
   background-color: #f4f4f4;
   box-sizing: border-box;
+  overflow: auto; /* Allow scrolling if needed on smaller screens */
 }
 
 .profileContainer {
@@ -18,13 +29,14 @@
   padding: 30px;
   box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
   max-width: 500px; /* Increased width */
-  max-height: 80vh; /* Max height to prevent overflow */
+  width: 100%;
+  max-height: 80vh; /* Limit height */
   text-align: center;
   overflow: hidden; /* Hide overflow */
 }
 
 .profileImage {
-  width: 140px; /* Increased size */
+  width: 140px;
   height: 140px;
   border-radius: 50%;
   object-fit: cover;
@@ -46,7 +58,7 @@
 .bioContainer {
   max-height: 150px; /* Restrict bio height */
   overflow-y: auto; /* Scroll if bio is too long */
-  width: 100%; /* Take full width */
+  width: 100%;
   padding: 10px;
   border-top: 1px solid #ddd;
   margin-bottom: 15px;
@@ -56,7 +68,7 @@
   font-size: 16px;
   color: #555;
   word-wrap: break-word;
-  text-align: left; /* Align text left */
+  text-align: left;
 }
 
 .editBtn {
@@ -77,7 +89,13 @@
 @media (max-width: 768px) {
   .profileContainer {
     width: 90%;
-    max-height: 80vh;
+    max-height: 90vh; /* Adjust max height for smaller screens */
+    padding: 20px;
+  }
+
+  .profileImage {
+    width: 120px;
+    height: 120px;
   }
 
   .fullname {
@@ -91,5 +109,37 @@
   .editBtn {
     font-size: 16px;
   }
+
+  .bioContainer {
+    max-height: 100px; /* Reduce bio height on smaller screens */
+  }
 }
 
+/* Very small screen adjustments */
+@media (max-width: 480px) {
+  .profileContainer {
+    padding: 15px;
+  }
+
+  .profileImage {
+    width: 100px;
+    height: 100px;
+  }
+
+  .fullname {
+    font-size: 20px;
+  }
+
+  .gender, .bio {
+    font-size: 12px;
+  }
+
+  .editBtn {
+    font-size: 14px;
+    padding: 10px 20px;
+  }
+
+  .bioContainer {
+    max-height: 80px;
+  }
+}
