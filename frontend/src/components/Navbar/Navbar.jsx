@@ -36,7 +36,7 @@ function Navbar() {
     navigateTo('/home'); // Redirect to /home on logo click
   };
 
-   return (
+  return (
     <nav className={styles.navbar}>
       <div className={styles.leftLinks}>
         <img
@@ -71,10 +71,10 @@ function Navbar() {
       {/* Menu for small screens */}
       <div className={`${styles.menu} ${isMenuOpen ? styles.showMenu : ""}`}>
         <div className={styles.menuLinksVertical}>
-          <Link to="/home">Home</Link>
-          <Link to="/profile">Profile</Link>
-          <Link to="/post/new">Create Post</Link>
-          <Link to="/my-posts">My Posts</Link>
+          <Link to="/home" onClick={toggleMenu}>Home</Link>
+          <Link to="/profile" onClick={toggleMenu}>Profile</Link>
+          <Link to="/post/new" onClick={toggleMenu}>Create Post</Link>
+          <Link to="/my-posts" onClick={toggleMenu}>My Posts</Link>
         </div>
         <div className={styles.bottomLogout}>
           <button className={styles.logoutBtn} onClick={logoutHandler}>
