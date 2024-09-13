@@ -12,27 +12,8 @@
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-.leftLinks .logo {
-  height: 40px;
-  cursor: pointer;
-}
-
-.hamburger {
-  display: none;
-  flex-direction: column;
-  cursor: pointer;
-  gap: 5px;
-}
-
-.hamburgerLine {
-  width: 25px;
-  height: 3px;
-  background-color: #343a40;
-}
-
-.menu {
+.leftLinks {
   display: flex;
-  justify-content: space-between;
   align-items: center;
   gap: 20px;
 }
@@ -51,7 +32,18 @@
   color: #0056b3;
 }
 
-.rightLinks .logoutBtn {
+.logo {
+  height: 40px;
+  cursor: pointer;
+}
+
+/* Right logout button for large screens */
+.rightLinks {
+  display: flex;
+  align-items: center;
+}
+
+.logoutBtn {
   padding: 8px 16px;
   background-color: #007bff;
   color: white;
@@ -63,58 +55,88 @@
   box-shadow: 0 4px 8px rgba(0, 123, 255, 0.3);
 }
 
-.rightLinks .logoutBtn:hover {
+.logoutBtn:hover {
   background-color: #0056b3;
   box-shadow: 0 6px 12px rgba(0, 123, 255, 0.4);
   transform: scale(1.05);
 }
 
-/* Hidden menu on small screens */
+/* Hamburger icon for small screens */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+}
+
+.hamburgerLine {
+  width: 25px;
+  height: 3px;
+  background-color: #343a40;
+}
+
+/* Menu links for small screens */
+.menu {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  position: fixed;
+  top: 60px;
+  right: 0;
+  height: calc(100vh - 60px); /* Height covering the rest of the screen except navbar */
+  background-color: white;
+  width: 70vw; /* Width of menu on small screens */
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+}
+
+.menu.showMenu {
+  display: flex;
+}
+
+.menuLinksVertical {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  flex-grow: 1;
+}
+
+/* Bottom logout button */
+.bottomLogout {
+  margin-bottom: 20px;
+}
+
+/* Responsive styles */
 @media (max-width: 768px) {
-  .menu {
-    display: none; /* Hide menu by default */
-    flex-direction: column;
-    align-items: center;
-    position: absolute;
-    top: 60px; /* Below the navbar */
-    right: 0;
-    background-color: white;
-    width: 100%;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    padding: 10px 0;
+  /* Hide the normal links on small screens */
+  .menuLinks {
+    display: none;
   }
 
-  .menu.showMenu {
-    display: flex; /* Show menu when toggled */
-  }
-
+  /* Show hamburger on small screens */
   .hamburger {
-    display: flex; /* Show hamburger icon on small screens */
+    display: flex;
   }
 
+  /* Adjust logout button inside menu */
   .rightLinks {
-    margin-top: 10px;
-  }
-
-  .menuLinks a {
-    padding: 10px 0;
-    font-size: 18px;
-  }
-
-  .rightLinks .logoutBtn {
-    padding: 10px 20px;
-    font-size: 16px;
+    display: none;
   }
 }
 
 /* Extra small screens */
 @media (max-width: 480px) {
-  .menuLinks a {
+  .menu {
+    width: 85vw; /* Narrower menu for very small screens */
+  }
+
+  .menuLinksVertical a {
     font-size: 16px;
   }
 
-  .rightLinks .logoutBtn {
+  .logoutBtn {
+    padding: 10px 20px;
     font-size: 14px;
-    padding: 8px 16px;
   }
 }

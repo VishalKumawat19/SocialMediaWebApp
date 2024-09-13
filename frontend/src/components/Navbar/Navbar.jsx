@@ -12,7 +12,7 @@ function Navbar() {
   const navigateTo = useNavigate()
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  
+
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
@@ -36,7 +36,7 @@ function Navbar() {
     navigateTo('/home'); // Redirect to /home on logo click
   };
 
-  return (
+   return (
     <nav className={styles.navbar}>
       <div className={styles.leftLinks}>
         <img
@@ -45,6 +45,13 @@ function Navbar() {
           className={styles.logo}
           onClick={handleLogoClick}
         />
+        {/* Show links directly on large screens */}
+        <div className={styles.menuLinks}>
+          <Link to="/home">Home</Link>
+          <Link to="/profile">Profile</Link>
+          <Link to="/post/new">Create Post</Link>
+          <Link to="/my-posts">My Posts</Link>
+        </div>
       </div>
 
       {/* Hamburger Menu Icon */}
@@ -54,15 +61,22 @@ function Navbar() {
         <span className={styles.hamburgerLine}></span>
       </div>
 
-      {/* Menu options */}
-      <div className={`${styles.menu} ${isMenuOpen ? styles.showMenu : ''}`}>
-        <div className={styles.menuLinks}>
+      {/* Show Logout on right on large screens */}
+      <div className={styles.rightLinks}>
+        <button className={styles.logoutBtn} onClick={logoutHandler}>
+          Logout
+        </button>
+      </div>
+
+      {/* Menu for small screens */}
+      <div className={`${styles.menu} ${isMenuOpen ? styles.showMenu : ""}`}>
+        <div className={styles.menuLinksVertical}>
           <Link to="/home">Home</Link>
           <Link to="/profile">Profile</Link>
           <Link to="/post/new">Create Post</Link>
           <Link to="/my-posts">My Posts</Link>
         </div>
-        <div className={styles.rightLinks}>
+        <div className={styles.bottomLogout}>
           <button className={styles.logoutBtn} onClick={logoutHandler}>
             Logout
           </button>
