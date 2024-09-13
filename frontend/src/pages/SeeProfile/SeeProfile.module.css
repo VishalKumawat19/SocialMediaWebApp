@@ -1,68 +1,91 @@
-/* SeeProfile.module.css */
 .profilePage {
   padding: 20px;
-  background-color: #f9f9f9;
+  background-color: #f2f2f2;
   max-width: 600px;
   margin: 0 auto;
-  padding-top: 80px;
+  padding-top: 80px; /* To ensure content starts below navbar */
+  min-height: 100vh; /* To ensure it takes full viewport height */
 }
 
 .profileContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: white;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 20px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  padding: 30px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden; /* Prevents overflowing content */
+  text-align: center; /* Ensures center-aligned text */
 }
 
 .profileImage {
-  width: 120px;
-  height: 120px;
+  width: 140px;
+  height: 140px;
   border-radius: 50%;
   object-fit: cover;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
+  border: 3px solid #007bff; /* Adds a modern border around image */
 }
 
 .fullname {
-  font-size: 24px;
+  font-size: 26px;
+  font-weight: bold;
   color: #333;
   margin-bottom: 10px;
+  letter-spacing: 1px;
 }
 
 .gender, .bio {
   font-size: 16px;
+  color: #666;
+  margin-bottom: 12px;
+  max-width: 100%; /* Prevents bio content from overflowing */
+  word-wrap: break-word; /* Ensures long text will wrap properly */
+}
+
+.bio {
+  margin-top: 10px;
+  font-size: 15px;
   color: #555;
-  margin-bottom: 10px;
+  line-height: 1.6; /* Adds line spacing to improve readability */
 }
 
 .editBtn {
-  padding: 10px 20px;
+  padding: 12px 25px;
   background-color: #007bff;
   color: white;
   text-decoration: none;
-  border-radius: 5px;
+  border-radius: 25px; /* Rounded button for a modern feel */
   font-size: 16px;
   text-align: center;
+  margin-top: 20px; /* Spacing above the button */
+  transition: background-color 0.3s ease;
 }
 
 .editBtn:hover {
   background-color: #0056b3;
 }
 
+/* Responsive Design */
 @media (max-width: 768px) {
-  .profilePage{
-    padding-top: 250px;
+  .profilePage {
+    padding-top: 200px; /* Adjust margin for mobile to ensure visibility */
   }
+
   .profileContainer {
     width: 90%;
-    padding: 15px;
+    padding: 20px;
+  }
+
+  .profileImage {
+    width: 120px;
+    height: 120px;
   }
 
   .fullname {
-    font-size: 20px;
+    font-size: 22px;
   }
 
   .gender, .bio {
@@ -71,6 +94,6 @@
 
   .editBtn {
     font-size: 14px;
+    padding: 10px 20px;
   }
 }
-

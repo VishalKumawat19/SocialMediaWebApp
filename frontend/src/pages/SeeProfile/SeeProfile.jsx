@@ -50,6 +50,7 @@ function SeeProfile() {
       </div>
     </div>
   );
+  
 }
 
 export default SeeProfile;
