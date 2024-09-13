@@ -10,6 +10,13 @@ function Navbar() {
   const { isAuthenticated,setIsAuthenticated} = useContext(AuthContext);
   const [loading,setLoading] =useState(false)
   const navigateTo = useNavigate()
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
 
 
   
@@ -36,15 +43,30 @@ function Navbar() {
           src={logo}
           alt="Logo"
           className={styles.logo}
-          onClick={handleLogoClick} // Click event for the logo
+          onClick={handleLogoClick}
         />
-        <Link to="/home">Home</Link>
-        <Link to="/profile">Profile</Link>
-        <Link to="/post/new">Create Post</Link>
-        <Link to="/my-posts">My Posts</Link>
       </div>
-      <div className={styles.rightLinks}>
-        <button className={styles.logoutBtn} onClick={logoutHandler}>Logout</button>
+
+      {/* Hamburger Menu Icon */}
+      <div className={styles.hamburger} onClick={toggleMenu}>
+        <span className={styles.hamburgerLine}></span>
+        <span className={styles.hamburgerLine}></span>
+        <span className={styles.hamburgerLine}></span>
+      </div>
+
+      {/* Menu options */}
+      <div className={`${styles.menu} ${isMenuOpen ? styles.showMenu : ''}`}>
+        <div className={styles.menuLinks}>
+          <Link to="/home">Home</Link>
+          <Link to="/profile">Profile</Link>
+          <Link to="/post/new">Create Post</Link>
+          <Link to="/my-posts">My Posts</Link>
+        </div>
+        <div className={styles.rightLinks}>
+          <button className={styles.logoutBtn} onClick={logoutHandler}>
+            Logout
+          </button>
+        </div>
       </div>
     </nav>
   );

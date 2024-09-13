@@ -3,78 +3,118 @@
   justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
-  background-color: #f8f9fa; /* Light grey background */
-  color: #343a40; /* Darker text color */
+  background-color: #f8f9fa;
+  color: #343a40;
   position: fixed;
   top: 0;
   width: 100%;
   z-index: 1000;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-   /* Subtle shadow */
 }
 
-.leftLinks {
+.leftLinks .logo {
+  height: 40px;
+  cursor: pointer;
+}
+
+.hamburger {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+  gap: 5px;
+}
+
+.hamburgerLine {
+  width: 25px;
+  height: 3px;
+  background-color: #343a40;
+}
+
+.menu {
   display: flex;
+  justify-content: space-between;
   align-items: center;
   gap: 20px;
 }
 
-.leftLinks a {
-  color: #007bff; /* Modern blue links */
+.menuLinks a {
+  color: #007bff;
   text-decoration: none;
-  font-weight: 500; /* Slightly bolder */
+  font-weight: 500;
   padding: 5px 10px;
-  border-radius: 5px; /* Rounded corners for hover effect */
-  transition: background-color 0.3s ease, color 0.3s ease; /* Smooth hover transition */
+  border-radius: 5px;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.leftLinks a:hover {
-  background-color: #e0e0e0; /* Light grey background on hover */
-  color: #0056b3; /* Darker blue color on hover */
+.menuLinks a:hover {
+  background-color: #e0e0e0;
+  color: #0056b3;
 }
 
-.logo {
-  height: 40px;
-  margin-right: 20px; /* Add space between logo and links */
-  cursor: pointer; /* Add pointer to indicate clickability */
-}
-
-.rightLinks {
-  display: flex;
-  align-items: center;
-  margin-right:25px;
-}
-
-.logoutBtn {
+.rightLinks .logoutBtn {
   padding: 8px 16px;
-  background-color: #007bff; /* Modern blue background */
+  background-color: #007bff;
   color: white;
   border: none;
-  border-radius: 20px; /* Rounded corners for modern look */
+  border-radius: 20px;
   cursor: pointer;
   font-size: 14px;
-  transition: all 0.3s ease; /* Smooth hover transition */
-  box-shadow: 0 4px 8px rgba(0, 123, 255, 0.3); /* Subtle shadow */
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 123, 255, 0.3);
 }
 
-.logoutBtn:hover {
-  background-color: #0056b3; /* Darker blue on hover */
-  box-shadow: 0 6px 12px rgba(0, 123, 255, 0.4); /* Enhance shadow on hover */
-  transform: scale(1.05); /* Slightly increase size on hover */
+.rightLinks .logoutBtn:hover {
+  background-color: #0056b3;
+  box-shadow: 0 6px 12px rgba(0, 123, 255, 0.4);
+  transform: scale(1.05);
 }
 
-/* Responsive design */
+/* Hidden menu on small screens */
 @media (max-width: 768px) {
-  .navbar{
-    margin-bottom: 240px;
-  }
-  .leftLinks {
+  .menu {
+    display: none; /* Hide menu by default */
     flex-direction: column;
-    gap: 10px;
+    align-items: center;
+    position: absolute;
+    top: 60px; /* Below the navbar */
+    right: 0;
+    background-color: white;
+    width: 100%;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 10px 0;
+  }
+
+  .menu.showMenu {
+    display: flex; /* Show menu when toggled */
+  }
+
+  .hamburger {
+    display: flex; /* Show hamburger icon on small screens */
   }
 
   .rightLinks {
     margin-top: 10px;
   }
+
+  .menuLinks a {
+    padding: 10px 0;
+    font-size: 18px;
+  }
+
+  .rightLinks .logoutBtn {
+    padding: 10px 20px;
+    font-size: 16px;
+  }
 }
 
+/* Extra small screens */
+@media (max-width: 480px) {
+  .menuLinks a {
+    font-size: 16px;
+  }
+
+  .rightLinks .logoutBtn {
+    font-size: 14px;
+    padding: 8px 16px;
+  }
+}
