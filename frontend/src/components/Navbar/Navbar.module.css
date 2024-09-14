@@ -133,6 +133,10 @@
     display: none;
   }
 
+  .logoutBtn {
+    margin-bottom: 60px;
+  }
+
   /* Show hamburger on small screens */
   .hamburger {
     display: flex;
@@ -164,5 +168,6 @@
   .logoutBtn {
     padding: 10px 20px;
     font-size: 14px;
+    margin-bottom: 60px;
   }
 }
